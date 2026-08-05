@@ -2,9 +2,12 @@ import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-
 
 export component TopicCard inherits Rectangle {
     in-out property <bool> isSelected: true;
-
-    height: 100px;
-
+    in-out property <string> title;
+    in-out property <int> lessons;
+    in-out property <int> due;
+    
+    height: 60px;
+    
     area:= TouchArea {
         height: parent.height;
         width: parent.width;
@@ -14,10 +17,26 @@ export component TopicCard inherits Rectangle {
         }
     }
 
-    background: ThemeState.isLight ? (isSelected ? LightColorPalette.Cream : (area.has-hover ? LightColorPalette.Pearl : transparent)) : (isSelected? DarkColorPalette.Onyx : (area.has-hover ? DarkColorPalette.StaleOnyx : transparent));
+    background: ThemeState.isLight ? (isSelected ? LightColorPalette.Selected : (area.has-hover ? LightColorPalette.Hover : transparent)) : (isSelected? DarkColorPalette.Selected : (area.has-hover ? DarkColorPalette.Hover : transparent));
     animate background {
          duration: 80ms;
     }
     
     border-radius: 10px;
+
+    VerticalLayout {
+        padding: 10px;
+
+        Text {
+            text: title;
+            font-size: 18px;
+            color: ThemeState.isLight ? (isSelected ? LightColorPalette.SelectedText : LightColorPalette.Text) : (isSelected ? DarkColorPalette.SelectedText : DarkColorPalette.Text);
+        }
+
+        Text {
+            text: lessons + " lessons · " + due + " due";
+            font-size: 14px;
+            color: ThemeState.isLight ? LightColorPalette.TextLight : DarkColorPalette.TextLight;
+        }
+    }
 }

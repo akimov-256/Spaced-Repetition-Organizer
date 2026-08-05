@@ -6,7 +6,7 @@ export component AppWindow inherits Window {
     height: 570px;
     width: 1024px;
 
-    background: ThemeState.isLight ? LightColorPalette.White : DarkColorPalette.Charcoal;
+    background: ThemeState.isLight ? LightColorPalette.Background : DarkColorPalette.Background;
 
     // Horizontal layout
     HorizontalLayout {
@@ -35,11 +35,15 @@ export component AppWindow inherits Window {
             }
 
             TopicCard {
-                
+                title: "arabic";
+                lessons: 6;
+                due: 1;
             }
 
             TopicCard {
-                
+                title: "physics";
+                lessons: 4;
+                due: 2;
             }
         }
 
