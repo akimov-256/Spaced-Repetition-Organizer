@@ -1,8 +1,12 @@
 import { Button, VerticalBox, HorizontalBox } from "std-widgets.slint";
+import { TopicCard } from "components/topic-card.slint";
+import { DarkColorPalette, LightColorPalette, ThemeState } from "theme/color-palette.slint";
 
 export component AppWindow inherits Window {
     height: 570px;
     width: 1024px;
+
+    background: ThemeState.isLight ? LightColorPalette.White : DarkColorPalette.Charcoal;
 
     // Horizontal layout
     HorizontalLayout {
@@ -28,6 +32,14 @@ export component AppWindow inherits Window {
 
                     text: "+";
                 }
+            }
+
+            TopicCard {
+                
+            }
+
+            TopicCard {
+                
             }
         }
 

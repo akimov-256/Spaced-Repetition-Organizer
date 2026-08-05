@@ -1,0 +1,23 @@
+import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-palette.slint";
+
+export component TopicCard inherits Rectangle {
+    in-out property <bool> isSelected: true;
+
+    height: 100px;
+
+    area:= TouchArea {
+        height: parent.height;
+        width: parent.width;
+
+        clicked => {
+            isSelected = !isSelected;
+        }
+    }
+
+    background: ThemeState.isLight ? (isSelected ? LightColorPalette.Cream : (area.has-hover ? LightColorPalette.Pearl : transparent)) : (isSelected? DarkColorPalette.Onyx : (area.has-hover ? DarkColorPalette.StaleOnyx : transparent));
+    animate background {
+         duration: 80ms;
+    }
+    
+    border-radius: 10px;
+}
