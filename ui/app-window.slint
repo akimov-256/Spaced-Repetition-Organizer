@@ -11,39 +11,48 @@ export component AppWindow inherits Window {
     // Horizontal layout
     HorizontalLayout {
         // Content control space
-        VerticalLayout {
-            width: 250px;
+            Rectangle {
+                width: 250px;
 
-            spacing: 10px;
-            padding: 10px;
+                background: ThemeState.isLight ? LightColorPalette.SideBar : DarkColorPalette.SideBar;
+                border-color: ThemeState.isLight ? LightColorPalette.Border : DarkColorPalette.Border;
+                border-width: 1px;
 
-            HorizontalLayout {
-                Text {
-                    vertical-alignment: center;
-                    height: 35px;
+                VerticalLayout {
+                width: parent.width;
+                height: parent.height;
+
+                spacing: 10px;
+                padding: 10px;
+
+                HorizontalLayout {
+                    Text {
+                        vertical-alignment: center;
+                        height: 35px;
+                    
+                        text: "Topics";
+                        font-size: 24px;
+                    }
                 
-                    text: "Topics";
-                    font-size: 24px;
+                    Button {
+                        height: 35px;
+                        width: 35px;
+
+                        text: "+";
+                    }
                 }
-            
-                Button {
-                    height: 35px;
-                    width: 35px;
 
-                    text: "+";
+                TopicCard {
+                    title: "arabic";
+                    lessons: 6;
+                    due: 1;
                 }
-            }
 
-            TopicCard {
-                title: "arabic";
-                lessons: 6;
-                due: 1;
-            }
-
-            TopicCard {
-                title: "physics";
-                lessons: 4;
-                due: 2;
+                TopicCard {
+                    title: "physics";
+                    lessons: 4;
+                    due: 2;
+                }
             }
         }
 
