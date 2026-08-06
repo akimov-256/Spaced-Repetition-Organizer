@@ -1,4 +1,4 @@
-import { Button, VerticalBox, HorizontalBox } from "std-widgets.slint";
+import { Button, LineEdit } from "std-widgets.slint";
 import { TopicCard } from "components/topic-card.slint";
 import { DarkColorPalette, LightColorPalette, ThemeState } from "theme/color-palette.slint";
 
@@ -24,16 +24,22 @@ export component AppWindow inherits Window {
 
                 spacing: 10px;
                 padding: 10px;
-
-                HorizontalLayout {
-                    Text {
-                        vertical-alignment: center;
-                        height: 35px;
-                    
-                        text: "Topics";
-                        font-size: 24px;
-                    }
+                Text {
+                    vertical-alignment: center;
+                    height: 35px;
                 
+                    text: "Topics";
+                    font-size: 20px;
+                }
+                
+                HorizontalLayout {
+                    spacing: 10px;
+
+                    LineEdit {
+                        placeholder-text: "New topic...";
+                        font-size: 16px;
+                    }
+                    
                     Button {
                         height: 35px;
                         width: 35px;
