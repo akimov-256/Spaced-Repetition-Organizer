@@ -1,16 +1,21 @@
 [package]
-name = "slint-rust-template"
-version = "0.1.0"
+name = "Spaced_Repetition_Organizer"
+version = "0.0.0"
 edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-slint = "1.16.1"
+slint = "1.17.1"
+rusqlite = { version = "0.32", features = ["bundled"] }
+zune-jpeg = { version = "0.5", features = ["log"] }
 
 [build-dependencies]
-slint-build = "1.16.1"
+slint-build = "1.17.1"
 
 [profile.release]
 codegen-units = 1
 lto = true
+
+[patch.crates-io]
+zune-jpeg = { path = "vendor/zune-jpeg-0.5.13" }
