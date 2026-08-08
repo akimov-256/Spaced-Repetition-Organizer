@@ -6,6 +6,12 @@ export component AppWindow inherits Window {
     height: 570px;
     width: 1024px;
 
+    // Callbacks
+    callback create_topic_requested(string);
+
+    // Properties
+    property <string> topic_name: "";
+
     background: ThemeState.isLight ? LightColorPalette.Background : DarkColorPalette.Background;
 
     // Horizontal layout
@@ -40,6 +46,8 @@ export component AppWindow inherits Window {
                     LineEdit {
                         placeholder-text: "New topic...";
                         font-size: 16px;
+
+                        text <=> root.topic_name;
                     }
                     
                     Button {
@@ -47,6 +55,13 @@ export component AppWindow inherits Window {
                         width: 35px;
 
                         text: "+";
+
+                        enabled: !root.topic_name.is-empty;
+
+                        clicked => {
+                            create_topic_requested(root.topic_name);
+                            root.topic_name = "";
+                        }
                     }
                 }
 
