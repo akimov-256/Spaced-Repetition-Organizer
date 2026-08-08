@@ -2,6 +2,7 @@ import { Button, LineEdit, ListView } from "std-widgets.slint";
 import { TopicCard } from "components/topic-card.slint";
 import { DarkColorPalette, LightColorPalette, ThemeState } from "theme/color-palette.slint";
 import { TopicData } from "models.slint";
+import { ContentPlaceHolder } from "pages/content-placeholder.slint";
 
 export component AppWindow inherits Window {
     height: 570px;
@@ -107,6 +108,10 @@ export component AppWindow inherits Window {
                 Button {
                     text: "+ Add lesson";
                 }
+            }
+
+            ContentPlaceHolder {
+
             }
         }
     }
