@@ -1,6 +1,7 @@
-import { Button, LineEdit } from "std-widgets.slint";
+import { Button, LineEdit, ListView } from "std-widgets.slint";
 import { TopicCard } from "components/topic-card.slint";
 import { DarkColorPalette, LightColorPalette, ThemeState } from "theme/color-palette.slint";
+import { TopicData } from "models.slint";
 
 export component AppWindow inherits Window {
     height: 570px;
@@ -11,6 +12,7 @@ export component AppWindow inherits Window {
 
     // Properties
     property <string> topic_name: "";
+    in-out property <[TopicData]> topics: [];
 
     background: ThemeState.isLight ? LightColorPalette.Background : DarkColorPalette.Background;
 
@@ -65,16 +67,18 @@ export component AppWindow inherits Window {
                     }
                 }
 
-                TopicCard {
-                    title: "arabic grammar";
-                    lessons: 6;
-                    due: 1;
-                }
+                ListView {
+                    for topic in topics: Rectangle {
+                        height: 70px;
 
-                TopicCard {
-                    title: "physics";
-                    lessons: 4;
-                    due: 2;
+                        TopicCard {
+                            y: 10px;
+
+                            title: topic.title;
+                            lessons: topic.lessons;
+                            due: topic.due;
+                        }
+                    }
                 }
             }
         }
