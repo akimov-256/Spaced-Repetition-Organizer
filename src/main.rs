@@ -14,6 +14,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     database_manager::initialize_database();
 
+    database_manager::create_topic("Math");
+
     ui.run()?;
 
     Ok(())

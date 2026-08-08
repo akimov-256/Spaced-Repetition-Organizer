@@ -26,3 +26,6 @@ slint-ui
 # OS
 Thumbs.db
 .DS_Store
+
+# PRODUCT FILES
+database.db
