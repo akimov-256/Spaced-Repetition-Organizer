@@ -10,6 +10,7 @@ export component AppWindow inherits Window {
 
     // Callbacks
     callback create_topic_requested(string);
+    callback delete_topic(string);
 
     // Properties
     property <string> topic_name: "";
@@ -78,6 +79,10 @@ export component AppWindow inherits Window {
                             title: topic.title;
                             lessons: topic.lessons;
                             due: topic.due;
+
+                            delete_requested => {
+                                delete_topic(topic.title);
+                            }
                         }
                     }
                 }

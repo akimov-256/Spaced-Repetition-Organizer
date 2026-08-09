@@ -48,3 +48,17 @@ pub fn load_topics() -> Result<Vec<Topic>> {
 
     Ok(topics)
 }
+
+pub fn delete_topic(name: String) -> Result<()> {
+    let conn = Connection::open("database.db")?;
+
+    let sql = format!("DELETE FROM topics WHERE name == \"{}\"", name);
+
+    conn.execute(&sql, {})?;
+
+    let sql = format!("DROP TABLE \"{}\"", name);
+
+    conn.execute(&sql, {})?;
+
+    Ok(())
+}

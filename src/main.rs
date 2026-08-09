@@ -5,7 +5,7 @@ mod models;
 mod database_manager;
 
 use std::error::Error;
-use slint::{ModelRc, VecModel};
+use slint::{ModelRc, VecModel, platform::Key::P};
 
 slint::include_modules!();
 
@@ -18,22 +18,41 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let ui_clone = ui.clone_strong();
     ui.on_create_topic_requested(move |name| {
-                                    match database_manager::create_topic(&name) {
-                                        Ok(_) => {
-                                            match load_topics(&ui_clone) {
-                                                Ok(_) => {
+        match database_manager::create_topic(&name) {
+            Ok(_) => {
+                match load_topics(&ui_clone) {
+                    Ok(_) => {
 
-                                                }
-                                                Err(error) => {
-                                                    print!("error: {error}")
-                                                }
-                                            }
-                                        }
-                                        Err(error) => {
-                                            println!("error: {error}");
-                                        }
-                                    }
-                                });
+                    }
+                    Err(error) => {
+                        print!("Error loading topics: {error}");
+                    }
+                }
+            }
+            Err(error) => {
+                println!("Error creating topic {name}: {error}");
+            }
+        }
+    });
+
+    let ui_clone = ui.clone_strong();
+    ui.on_delete_topic(move |name| {
+        match database_manager::delete_topic(name.to_string()) {
+            Ok(_) => {
+                match load_topics(&ui_clone) {
+                    Ok(_) => {
+
+                    }
+                    Err(error) => {
+                        print!("Error loading topics: {error}");
+                    }
+                }
+            }
+            Err(error) => {
+                println!("Error deleting topic {name}: {error}");
+            }
+        }
+    });
 
     load_topics(&ui)?;
 

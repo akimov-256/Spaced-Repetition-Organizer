@@ -6,6 +6,8 @@ export component TopicCard inherits Rectangle {
     in-out property <string> title;
     in-out property <int> lessons;
     in-out property <int> due;
+
+    callback delete_requested();
     
     height: 60px;
     
@@ -49,11 +51,15 @@ export component TopicCard inherits Rectangle {
 
         VerticalLayout {
             alignment: center;
-            
+
             Button {
                 text: "X";
                 height: 35px;
                 width: 35px;
+
+                clicked => {
+                    delete_requested();
+                }
             }
         }
     }
