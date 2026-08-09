@@ -1,5 +1,3 @@
-use std::ops::ControlFlow::Continue;
-
 use rusqlite::{Connection, Result};
 use crate::models::Topic;
 
@@ -7,7 +5,7 @@ pub fn initialize_database() -> Result<()> {
     let conn = Connection::open("database.db")?;
 
     conn.execute(
-        "CREATE TABLE topics (
+        "CREATE TABLE IF NOT EXISTS topics (
                 id INTEGER PRIMARY KEY,
                 name TEXT NOT NULL,
                 lessons INTEGER NOT NULL,

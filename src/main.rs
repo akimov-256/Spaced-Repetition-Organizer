@@ -14,13 +14,20 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let ui_handle = ui.as_weak();
 
-    database_manager::initialize_database();
+    database_manager::initialize_database()?;
 
     let ui_clone = ui.clone_strong();
     ui.on_create_topic_requested(move |name| {
                                     match database_manager::create_topic(&name) {
                                         Ok(_) => {
-                                            load_topics(&ui_clone);
+                                            match load_topics(&ui_clone) {
+                                                Ok(_) => {
+
+                                                }
+                                                Err(error) => {
+                                                    print!("error: {error}")
+                                                }
+                                            }
                                         }
                                         Err(error) => {
                                             println!("error: {error}");
