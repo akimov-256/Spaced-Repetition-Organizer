@@ -1,0 +1,74 @@
+import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-palette.slint";
+import { VerticalBox, Button } from "std-widgets.slint";
+
+export component LessonCard inherits Rectangle {
+    in-out property <string> title: "Multiplication";
+    in-out property <string> last_reviewed: "28-08-2026";
+    in-out property <string> next_review: "21-09-2026";
+    in-out property <string> stage: "Stage 2";
+    in-out property <string> duration: "3 weeks";
+
+    callback review_button_pressed();
+
+    height: 100px;
+
+    border-color: ThemeState.isLight ? LightColorPalette.Border : DarkColorPalette.Border;
+    border-radius: 10px;
+
+    background: ThemeState.isLight ? LightColorPalette.SideBar : DarkColorPalette.SideBar;
+
+    HorizontalLayout {
+        padding: 10px;
+        spacing: 5px;
+
+        VerticalLayout {
+            horizontal-stretch: 1;
+            padding: 5px;
+
+            Text {
+                text: root.title;
+                color: ThemeState.isLight ? LightColorPalette.Text : DarkColorPalette.Text;
+                font-size: 20px;
+            }
+            Text {
+                text: "Last reviewed: " + root.last_reviewed;
+                color: ThemeState.isLight ? LightColorPalette.TextLight : DarkColorPalette.TextLight;
+                font-size: 14px;
+            }
+            Text {
+                text: "Next review: " + root.next_review;
+                color: ThemeState.isLight ? LightColorPalette.TextLight : DarkColorPalette.TextLight;
+                font-size: 14px;
+            }
+            Text {
+                text: root.stage + " · " + root.duration;
+                color: ThemeState.isLight ? LightColorPalette.SelectedText : DarkColorPalette.SelectedText;
+                font-size: 12px;
+            }
+        }
+
+        VerticalLayout {
+            alignment: center;
+
+            Button {
+                height: 65px;
+                text: "Review";
+            }
+        }
+
+        VerticalLayout {
+            alignment: center;
+            spacing: 5px;
+
+            Button {
+                height: 30px;
+                text: "Edit";
+            }
+
+            Button {
+                height: 30px;
+                text: "Delete";
+            }
+        }
+    }
+}
