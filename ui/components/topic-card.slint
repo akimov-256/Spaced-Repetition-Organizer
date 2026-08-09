@@ -1,4 +1,5 @@
 import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-palette.slint";
+import { Button, HorizontalBox } from "std-widgets.slint";
 
 export component TopicCard inherits Rectangle {
     in-out property <bool> isSelected: true;
@@ -24,19 +25,36 @@ export component TopicCard inherits Rectangle {
     
     border-radius: 10px;
 
-    VerticalLayout {
+    HorizontalLayout {
         padding: 10px;
 
-        Text {
-            text: title;
-            font-size: 18px;
-            color: ThemeState.isLight ? (isSelected ? LightColorPalette.SelectedText : LightColorPalette.Text) : (isSelected ? DarkColorPalette.SelectedText : DarkColorPalette.Text);
+        VerticalLayout {
+            Text {
+                text: title;
+                font-size: 18px;
+                color: ThemeState.isLight ? (isSelected ? LightColorPalette.SelectedText : LightColorPalette.Text) : (isSelected ? DarkColorPalette.SelectedText : DarkColorPalette.Text);
+            }
+
+            Text {
+                text: lessons + " lessons · " + due + " due";
+                font-size: 14px;
+                color: ThemeState.isLight ? LightColorPalette.TextLight : DarkColorPalette.TextLight;
+            }
         }
 
-        Text {
-            text: lessons + " lessons · " + due + " due";
-            font-size: 14px;
-            color: ThemeState.isLight ? LightColorPalette.TextLight : DarkColorPalette.TextLight;
+        // Spacer
+        Rectangle {
+
+        }
+
+        VerticalLayout {
+            alignment: center;
+            
+            Button {
+                text: "X";
+                height: 35px;
+                width: 35px;
+            }
         }
     }
 }
