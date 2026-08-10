@@ -3,6 +3,8 @@ import { Button, LineEdit, ListView } from "std-widgets.slint";
 import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-palette.slint";
 
 export component LessonsPage inherits Rectangle {
+    in-out property <string> title;
+
     background: transparent;
 
     VerticalLayout {
@@ -14,7 +16,7 @@ export component LessonsPage inherits Rectangle {
                 vertical-alignment: center;
                 height: 30px;
 
-                text: "arabic grammar";
+                text: title;
                 font-size: 20px;
 
                 color: ThemeState.isLight ? LightColorPalette.Text : DarkColorPalette.Text;

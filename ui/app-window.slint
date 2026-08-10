@@ -9,6 +9,8 @@ export component AppWindow inherits Window {
     height: 570px;
     width: 1024px;
 
+    in-out property <string> currentTopic: "";
+
     // Callbacks
     callback create_topic_requested(string);
     callback delete_topic(string);
@@ -81,8 +83,14 @@ export component AppWindow inherits Window {
                             lessons: topic.lessons;
                             due: topic.due;
 
+                            isSelected: root.currentTopic == topic.title;
+
                             delete_requested => {
                                 delete_topic(topic.title);
+                            }
+
+                            selected => {
+                                currentTopic = topic.title;
                             }
                         }
                     }
@@ -91,8 +99,8 @@ export component AppWindow inherits Window {
         }   
 
         // Content space
-        NoTopicPage {
-            
+        LessonsPage {
+            title: root.currentTopic;
         }
     }
 }

@@ -2,12 +2,13 @@ import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-
 import { Button, HorizontalBox } from "std-widgets.slint";
 
 export component TopicCard inherits Rectangle {
-    in-out property <bool> isSelected: true;
+    in-out property <bool> isSelected: false;
     in-out property <string> title;
     in-out property <int> lessons;
     in-out property <int> due;
 
     callback delete_requested();
+    callback selected();
     
     height: 60px;
     
@@ -16,7 +17,7 @@ export component TopicCard inherits Rectangle {
         width: parent.width;
 
         clicked => {
-            isSelected = !isSelected;
+            selected();
         }
     }
 
