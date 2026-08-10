@@ -62,7 +62,7 @@ export component LessonsPage inherits Rectangle {
             }
 
             if lessons.length != 0 : ListView {
-                for lesson in lessons : Rectangle {
+                for lesson[i] in lessons : Rectangle {
                     height: 110px;
                     width: parent.width - 10px;
 
@@ -71,9 +71,9 @@ export component LessonsPage inherits Rectangle {
                         x: 0px;
                         y: 10px;
 
-                        name: lesson.name;
+                        name: lessons[lessons.length - 1 - i].name;
                         last_reviewed: "Blank";
-                        next_review: lesson.next_review;
+                        next_review: lessons[lessons.length - 1 - i].next_review;
                         stage: "Blank";
                         duration: "Blank";
                     }
