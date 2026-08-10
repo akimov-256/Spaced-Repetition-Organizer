@@ -1,5 +1,7 @@
-use rusqlite::{Connection, Result};
-use crate::models::Topic;
+use std::cmp::Ordering::Less;
+
+use rusqlite::{Connection, Result, Statement};
+use crate::models::{Lesson, Topic};
 
 pub fn initialize_database() -> Result<()> {
     let conn = Connection::open("database.db")?;
@@ -71,4 +73,23 @@ pub fn add_lesson(topic: String, lesson: String) -> Result<()> {
     conn.execute(&sql, {})?;
 
     Ok(())
+}
+
+pub fn load_lessons(topic: String) -> Result<Vec<Lesson>> {
+    let conn = Connection::open("database.db")?;
+
+    let sql = format!("SELECT name, next_review FROM \"{}\"", topic);
+
+    let mut statement = conn.prepare(&sql)?;
+
+    let rows = statement.query_map([], |row| {
+        Ok(Lesson {
+            name: row.get(0)?,
+            next_review: row.get(1)?
+        })
+    })?;
+
+    let lessons = rows.collect::<Result<Vec<Lesson>>>()?;
+
+    Ok(lessons)
 }

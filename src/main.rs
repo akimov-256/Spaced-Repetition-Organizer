@@ -58,7 +58,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     ui_clone.on_add_lesson(move |topic, lesson| {
         match database_manager::add_lesson(topic.to_string(), lesson.to_string()) {
             Ok(_) => {
-                
+                database_manager::load_lessons(topic.to_string());
             }
             Err(error) => {
                 println!("Error adding lesson {lesson}: {error}");
