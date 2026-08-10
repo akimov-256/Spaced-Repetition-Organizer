@@ -35,6 +35,7 @@ export component LessonsPage inherits Rectangle {
 
                 accepted() => {
                     add_lesson(root.new_lesson_text);
+                    root.new_lesson_text = "";
                 }
             }
 
@@ -43,6 +44,7 @@ export component LessonsPage inherits Rectangle {
 
                 clicked => {
                     add_lesson(root.new_lesson_text);
+                    root.new_lesson_text = "";
                 }
             }
         }
