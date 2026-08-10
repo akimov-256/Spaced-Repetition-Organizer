@@ -73,15 +73,15 @@ export component AppWindow inherits Window {
                 }
 
                 ListView {
-                    for topic in topics: Rectangle {
+                    for topic[i] in topics: Rectangle {
                         height: 70px;
 
                         TopicCard {
                             y: 10px;
 
-                            title: topic.title;
-                            lessons: topic.lessons;
-                            due: topic.due;
+                            title: root.topics[topics.length - 1 - i].title;
+                            lessons: root.topics[topics.length - 1 - i].lessons;
+                            due: root.topics[topics.length - 1 - i].due;
 
                             isSelected: root.currentTopic == topic.title;
 
