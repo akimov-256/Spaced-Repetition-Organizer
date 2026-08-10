@@ -9,7 +9,6 @@ export component AppWindow inherits Window {
     height: 570px;
     width: 1024px;
 
-    in-out property <string> currentTopic: "";
 
     // Callbacks
     callback create_topic_requested(string);
@@ -18,6 +17,7 @@ export component AppWindow inherits Window {
     // Properties
     property <string> topic_name: "";
     in-out property <[TopicData]> topics: [];
+    in-out property <string> currentTopic: "";
 
     background: ThemeState.isLight ? LightColorPalette.Background : DarkColorPalette.Background;
 
@@ -99,7 +99,11 @@ export component AppWindow inherits Window {
         }   
 
         // Content space
-        LessonsPage {
+        if (root.currentTopic == "" || root.topics.length == 0) : NoTopicPage {
+
+        }
+
+        if (root.currentTopic != "" && root.topics.length > 0) : LessonsPage {
             title: root.currentTopic;
         }
     }
