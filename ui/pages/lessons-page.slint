@@ -1,0 +1,38 @@
+import { EmptyState } from "empty-state.slint";
+import { Button, LineEdit, ListView } from "std-widgets.slint";
+import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-palette.slint";
+
+export component LessonsPage inherits Rectangle {
+    background: transparent;
+
+    VerticalLayout {
+        HorizontalLayout {
+            padding: 10px;
+            spacing: 10px;
+
+            Text {
+                vertical-alignment: center;
+                height: 30px;
+
+                text: "arabic grammar";
+                font-size: 20px;
+
+                color: ThemeState.isLight ? LightColorPalette.Text : DarkColorPalette.Text;
+            }
+
+            LineEdit {
+                placeholder-text: "New lesson name..";
+                font-size: 16px;
+            }
+
+            Button {
+                text: "+ Add lesson";
+            }
+        }
+
+        EmptyState {
+            main_text: "Nothing here!";
+            tip_text: "Create a lesson to get started.";
+        }
+    }
+}

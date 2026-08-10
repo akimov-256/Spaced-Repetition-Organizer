@@ -1,6 +1,8 @@
 import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-palette.slint";
 
-export component ContentPlaceHolder inherits Rectangle {
+export component EmptyState inherits Rectangle {
+    in-out property <string> main_text;
+    in-out property <string> tip_text;
     
     background: transparent;
 
@@ -12,14 +14,14 @@ export component ContentPlaceHolder inherits Rectangle {
         Text {
             horizontal-alignment: center;
 
-            text: "Nothing here!";
+            text: main_text;
             color: ThemeState.isLight ? LightColorPalette.Text : DarkColorPalette.Text;
             font-size: 36px;
         }
         Text {
             horizontal-alignment: center;
 
-            text: "Add a lesson to get started.";
+            text: tip_text;
             color: ThemeState.isLight ? LightColorPalette.TextLight : DarkColorPalette.TextLight;
             font-size: 16px;
         }

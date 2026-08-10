@@ -5,7 +5,7 @@ mod models;
 mod database_manager;
 
 use std::error::Error;
-use slint::{ModelRc, VecModel, platform::Key::P};
+use slint::{ModelRc, VecModel};
 
 slint::include_modules!();
 

@@ -2,7 +2,8 @@ import { Button, LineEdit, ListView } from "std-widgets.slint";
 import { TopicCard } from "components/topic-card.slint";
 import { DarkColorPalette, LightColorPalette, ThemeState } from "theme/color-palette.slint";
 import { TopicData } from "models.slint";
-import { ContentPlaceHolder } from "pages/content-placeholder.slint";
+import { LessonsPage } from "pages/lessons-page.slint";
+import { NoTopicPage } from "pages/no-topic-page.slint";
 
 export component AppWindow inherits Window {
     height: 570px;
@@ -21,14 +22,14 @@ export component AppWindow inherits Window {
     // Horizontal layout
     HorizontalLayout {
         // Content control space
-            Rectangle {
-                width: 250px;
+        Rectangle {
+            width: 250px;
 
-                background: ThemeState.isLight ? LightColorPalette.SideBar : DarkColorPalette.SideBar;
-                border-color: ThemeState.isLight ? LightColorPalette.Border : DarkColorPalette.Border;
-                border-width: 1px;
+            background: ThemeState.isLight ? LightColorPalette.SideBar : DarkColorPalette.SideBar;
+            border-color: ThemeState.isLight ? LightColorPalette.Border : DarkColorPalette.Border;
+            border-width: 1px;
 
-                VerticalLayout {
+            VerticalLayout {
                 width: parent.width;
                 height: parent.height;
 
@@ -43,7 +44,7 @@ export component AppWindow inherits Window {
 
                     color: ThemeState.isLight ? LightColorPalette.Text : DarkColorPalette.Text;
                 }
-                
+
                 HorizontalLayout {
                     spacing: 10px;
 
@@ -53,7 +54,7 @@ export component AppWindow inherits Window {
 
                         text <=> root.topic_name;
                     }
-                    
+
                     Button {
                         height: 35px;
                         width: 35px;
@@ -86,38 +87,12 @@ export component AppWindow inherits Window {
                         }
                     }
                 }
-            }
-        }
+            }   
+        }   
 
         // Content space
-        VerticalLayout {
-            HorizontalLayout {
-                padding: 10px;
-                spacing: 10px;
-
-                Text {
-                    vertical-alignment: center;
-                    height: 30px;
-
-                    text: "arabic grammar";
-                    font-size: 20px;
-
-                    color: ThemeState.isLight ? LightColorPalette.Text : DarkColorPalette.Text;
-                }
-
-                LineEdit {
-                    placeholder-text: "New lesson name..";
-                    font-size: 16px;
-                }
-
-                Button {
-                    text: "+ Add lesson";
-                }
-            }
-
-            ContentPlaceHolder {
-
-            }
+        NoTopicPage {
+            
         }
     }
 }

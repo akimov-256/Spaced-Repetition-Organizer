@@ -1,0 +1,14 @@
+import { Button, LineEdit, ListView } from "std-widgets.slint";
+import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-palette.slint";
+import { EmptyState } from "empty-state.slint";
+
+export component NoTopicPage inherits Rectangle {
+    background: transparent;
+
+    VerticalLayout {
+        EmptyState {
+            main_text: "No topic selected!";
+            tip_text: "Create or select a topic to get started.";
+        }
+    }
+}
