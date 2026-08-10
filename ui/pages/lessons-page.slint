@@ -3,7 +3,12 @@ import { Button, LineEdit, ListView } from "std-widgets.slint";
 import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-palette.slint";
 
 export component LessonsPage inherits Rectangle {
-    in-out property <string> title;
+    // Properties
+    in-out property <string> topic;
+    in-out property <string> new_lesson_text: "";
+
+    // Callbacks
+    callback add_lesson(string);
 
     background: transparent;
 
@@ -16,7 +21,7 @@ export component LessonsPage inherits Rectangle {
                 vertical-alignment: center;
                 height: 30px;
 
-                text: title;
+                text: topic;
                 font-size: 20px;
 
                 color: ThemeState.isLight ? LightColorPalette.Text : DarkColorPalette.Text;
@@ -25,10 +30,20 @@ export component LessonsPage inherits Rectangle {
             LineEdit {
                 placeholder-text: "New lesson name..";
                 font-size: 16px;
+
+                text <=> root.new_lesson_text;
+
+                accepted() => {
+                    add_lesson(root.new_lesson_text);
+                }
             }
 
             Button {
                 text: "+ Add lesson";
+
+                clicked => {
+                    add_lesson(root.new_lesson_text);
+                }
             }
         }
 

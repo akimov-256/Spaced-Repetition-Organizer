@@ -54,6 +54,18 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
+    let ui_clone = ui.clone_strong();
+    ui_clone.on_add_lesson(move |topic, lesson| {
+        match database_manager::add_lesson(topic.to_string(), lesson.to_string()) {
+            Ok(_) => {
+                
+            }
+            Err(error) => {
+                println!("Error adding lesson {lesson}: {error}");
+            }
+        }
+    });
+
     load_topics(&ui)?;
 
     ui.run()?;

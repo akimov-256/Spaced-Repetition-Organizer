@@ -13,6 +13,7 @@ export component AppWindow inherits Window {
     // Callbacks
     callback create_topic_requested(string);
     callback delete_topic(string);
+    callback add_lesson(topic: string, lesson: string);
 
     // Properties
     property <string> topic_name: "";
@@ -109,7 +110,11 @@ export component AppWindow inherits Window {
         }
 
         if (root.currentTopic != "" && root.topics.length > 0) : LessonsPage {
-            title: root.currentTopic;
+            topic: root.currentTopic;
+
+            add_lesson(lesson) => {
+                root.add_lesson(root.currentTopic, lesson);
+            }
         }
     }
 }

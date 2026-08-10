@@ -62,3 +62,13 @@ pub fn delete_topic(name: String) -> Result<()> {
 
     Ok(())
 }
+
+pub fn add_lesson(topic: String, lesson: String) -> Result<()> {
+    let conn = Connection::open("database.db")?;
+
+    let sql = format!("INSERT INTO \"{}\" (name, next_review) VALUES (\"{}\", \"{}\")", topic, lesson, 0);
+
+    conn.execute(&sql, {})?;
+
+    Ok(())
+}
