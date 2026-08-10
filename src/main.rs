@@ -5,22 +5,21 @@ mod models;
 mod database_manager;
 
 use std::error::Error;
-use slint::{ModelRc, VecModel};
+use slint::{ModelRc, ToSharedString, VecModel};
 
 slint::include_modules!();
 
 fn main() -> Result<(), Box<dyn Error>> {
     let ui = AppWindow::new()?;
 
-    let ui_handle = ui.as_weak();
-
     database_manager::initialize_database()?;
 
     let ui_clone = ui.clone_strong();
-    ui.on_create_topic_requested(move |name| {
+    let ui_clone_2 = ui.clone_strong();
+    ui_clone.on_create_topic_requested(move |name| {
         match database_manager::create_topic(&name) {
             Ok(_) => {
-                match load_topics(&ui_clone) {
+                match load_topics(&ui_clone_2) {
                     Ok(_) => {
 
                     }
@@ -36,10 +35,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     });
 
     let ui_clone = ui.clone_strong();
-    ui.on_delete_topic(move |name| {
+    let ui_clone_2 = ui.clone_strong();
+    ui_clone.on_delete_topic(move |name| {
         match database_manager::delete_topic(name.to_string()) {
             Ok(_) => {
-                match load_topics(&ui_clone) {
+                match load_topics(&ui_clone_2) {
                     Ok(_) => {
 
                     }
@@ -55,10 +55,18 @@ fn main() -> Result<(), Box<dyn Error>> {
     });
 
     let ui_clone = ui.clone_strong();
+    let ui_clone_2 = ui.clone_strong();
     ui_clone.on_add_lesson(move |topic, lesson| {
         match database_manager::add_lesson(topic.to_string(), lesson.to_string()) {
             Ok(_) => {
-                database_manager::load_lessons(topic.to_string());
+                match load_lessons(&ui_clone_2, topic.to_string()) {
+                    Ok(_) => {
+
+                    }
+                    Err(error) => {
+                        println!("Error loading lessons for topic {topic}: {error}");
+                    }
+                }
             }
             Err(error) => {
                 println!("Error adding lesson {lesson}: {error}");
@@ -66,7 +74,21 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
-    load_topics(&ui)?;
+    let ui_clone = ui.clone_strong();
+    load_topics(&ui_clone)?;
+
+    let ui_clone = ui.clone_strong();
+    let ui_clone_2 = ui.clone_strong();
+    ui_clone.on_load_lessons_requested(move |topic| {
+        match load_lessons(&ui_clone_2, topic.to_string()) {
+            Ok(_) => {
+
+            }
+            Err(error) => {
+                println!("Error loading lessons for topic {topic}: {error}");
+            }
+        }
+    });
 
     ui.run()?;
 
@@ -88,6 +110,24 @@ fn load_topics(app: &AppWindow) -> Result<(), Box<dyn Error>> {
     let model = ModelRc::new(VecModel::from(topic_data));
 
     app.set_topics(model);
+
+    Ok(())
+}
+
+fn load_lessons(app: &AppWindow, topic: String) -> Result<(), Box<dyn Error>> {
+    let lessons = database_manager::load_lessons(topic)?;
+
+    let lesson_data: Vec<LessonData> = lessons
+    .into_iter()
+    .map(|row| LessonData {
+        name: row.name.to_shared_string(),
+        next_review: row.next_review,
+    })
+    .collect();
+
+    let model = ModelRc::new(VecModel::from(lesson_data));
+
+    app.set_lessons(model);
 
     Ok(())
 }

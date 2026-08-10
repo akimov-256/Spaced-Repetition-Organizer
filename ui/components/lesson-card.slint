@@ -2,11 +2,11 @@ import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-
 import { VerticalBox, Button } from "std-widgets.slint";
 
 export component LessonCard inherits Rectangle {
-    in-out property <string> title: "Multiplication";
-    in-out property <string> last_reviewed: "28-08-2026";
-    in-out property <string> next_review: "21-09-2026";
-    in-out property <string> stage: "Stage 2";
-    in-out property <string> duration: "3 weeks";
+    in-out property <string> name;
+    in-out property <string> last_reviewed;
+    in-out property <string> next_review;
+    in-out property <string> stage;
+    in-out property <string> duration;
 
     callback review_button_pressed();
 
@@ -26,7 +26,7 @@ export component LessonCard inherits Rectangle {
             padding: 5px;
 
             Text {
-                text: root.title;
+                text: root.name;
                 color: ThemeState.isLight ? LightColorPalette.Text : DarkColorPalette.Text;
                 font-size: 20px;
             }

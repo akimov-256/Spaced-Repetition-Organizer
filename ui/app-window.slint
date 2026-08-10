@@ -1,7 +1,7 @@
 import { Button, LineEdit, ListView } from "std-widgets.slint";
 import { TopicCard } from "components/topic-card.slint";
 import { DarkColorPalette, LightColorPalette, ThemeState } from "theme/color-palette.slint";
-import { TopicData } from "models.slint";
+import { TopicData, LessonData } from "models.slint";
 import { LessonsPage } from "pages/lessons-page.slint";
 import { NoTopicPage } from "pages/no-topic-page.slint";
 
@@ -14,11 +14,13 @@ export component AppWindow inherits Window {
     callback create_topic_requested(string);
     callback delete_topic(string);
     callback add_lesson(topic: string, lesson: string);
+    callback load_lessons_requested(string);
 
     // Properties
     property <string> topic_name: "";
     in-out property <[TopicData]> topics: [];
     in-out property <string> currentTopic: "";
+    in-out property <[LessonData]> lessons: [];
 
     background: ThemeState.isLight ? LightColorPalette.Background : DarkColorPalette.Background;
 
@@ -96,7 +98,8 @@ export component AppWindow inherits Window {
                             }
 
                             selected => {
-                                currentTopic = topic.title;
+                                root.currentTopic = topic.title;
+                                load_lessons_requested(root.currentTopic)
                             }
                         }
                     }
@@ -111,9 +114,14 @@ export component AppWindow inherits Window {
 
         if (root.currentTopic != "" && root.topics.length > 0) : LessonsPage {
             topic: root.currentTopic;
+            lessons: root.lessons;
 
             add_lesson(lesson) => {
                 root.add_lesson(root.currentTopic, lesson);
+            }
+
+            load_lessons_requested => {
+                root.load_lessons_requested(root.currentTopic);
             }
         }
     }

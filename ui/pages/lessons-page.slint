@@ -1,14 +1,18 @@
 import { EmptyState } from "empty-state.slint";
 import { Button, LineEdit, ListView } from "std-widgets.slint";
 import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-palette.slint";
+import { LessonData } from "../models.slint";
+import { LessonCard } from "../components/lesson-card.slint";
 
 export component LessonsPage inherits Rectangle {
     // Properties
     in-out property <string> topic;
     in-out property <string> new_lesson_text: "";
+    in-out property <[LessonData]> lessons: [];
 
     // Callbacks
     callback add_lesson(string);
+    callback load_lessons_requested();
 
     background: transparent;
 
@@ -49,9 +53,32 @@ export component LessonsPage inherits Rectangle {
             }
         }
 
-        EmptyState {
-            main_text: "Nothing here!";
-            tip_text: "Create a lesson to get started.";
+        VerticalLayout {
+            padding: 10px;
+
+            if lessons.length == 0 : EmptyState {
+                main_text: "Nothing here!";
+                tip_text: "Create a lesson to get started.";
+            }
+
+            if lessons.length != 0 : ListView {
+                for lesson in lessons : Rectangle {
+                    height: 110px;
+                    width: parent.width - 10px;
+
+                    LessonCard {
+                        width: parent.width - 10px;
+                        x: 0px;
+                        y: 10px;
+
+                        name: lesson.name;
+                        last_reviewed: "Blank";
+                        next_review: lesson.next_review;
+                        stage: "Blank";
+                        duration: "Blank";
+                    }
+                }
+            }
         }
     }
 }
