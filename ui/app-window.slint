@@ -55,6 +55,11 @@ export component AppWindow inherits Window {
                         font-size: 16px;
 
                         text <=> root.topic_name;
+
+                        accepted() => {
+                            create_topic_requested(root.topic_name);
+                            root.topic_name = "";
+                        }
                     }
 
                     Button {
