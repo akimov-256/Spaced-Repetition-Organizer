@@ -1,6 +1,4 @@
-use std::cmp::Ordering::Less;
-
-use rusqlite::{Connection, Result, Statement};
+use rusqlite::{Connection, Result};
 use crate::models::{Lesson, Topic};
 
 pub fn initialize_database() -> Result<()> {
@@ -13,6 +11,17 @@ pub fn initialize_database() -> Result<()> {
                 lessons INTEGER NOT NULL,
                 due INTEGER NOT NULL
             ) STRICT", {})?;
+
+    conn.execute(
+        "CREATE TABLE IF NOT EXISTS lessons (
+                id INTEGER PRIMARY KEY,
+                name TEXT NOT NULL,
+                topic TEXT NOT NULL,
+                
+                stage INTEGER NOT NULL DEFAULT 1,
+                previous_review INTEGER,
+                next_review INTEGER NOT NULL
+            ) STRICT", {})?;
     
     Ok(())
 }
@@ -20,13 +29,6 @@ pub fn initialize_database() -> Result<()> {
 pub fn create_topic(name: &str) -> Result<()> {
 
     let conn = Connection::open("database.db")?;
-
-    let sql = format!("CREATE TABLE \"{}\" (
-                     id INTEGER PRIMARY KEY,
-                     name TEXT NOT NULL,
-                     next_review INTEGER NOT NULL
-                    ) STRICT", name);
-    conn.execute(&sql, {})?;
 
     conn.execute("INSERT INTO topics (name, lessons, due) VALUES (:name, :lessons, :due)", (name, 0, 0))?;
 
@@ -58,17 +60,13 @@ pub fn delete_topic(name: String) -> Result<()> {
 
     conn.execute(&sql, {})?;
 
-    let sql = format!("DROP TABLE \"{}\"", name);
-
-    conn.execute(&sql, {})?;
-
     Ok(())
 }
 
 pub fn add_lesson(topic: String, lesson: String) -> Result<()> {
     let conn = Connection::open("database.db")?;
 
-    let sql = format!("INSERT INTO \"{}\" (name, next_review) VALUES (\"{}\", \"{}\")", topic, lesson, 0);
+    let sql = format!("INSERT INTO lessons (name, topic, next_review) VALUES (\"{}\", \"{}\", \"{}\")", lesson, topic, 0);
 
     conn.execute(&sql, {})?;
 
@@ -78,7 +76,7 @@ pub fn add_lesson(topic: String, lesson: String) -> Result<()> {
 pub fn load_lessons(topic: String) -> Result<Vec<Lesson>> {
     let conn = Connection::open("database.db")?;
 
-    let sql = format!("SELECT name, next_review FROM \"{}\"", topic);
+    let sql = format!("SELECT name, next_review FROM lessons WHERE topic == \"{}\"", topic);
 
     let mut statement = conn.prepare(&sql)?;
 
@@ -97,7 +95,7 @@ pub fn load_lessons(topic: String) -> Result<Vec<Lesson>> {
 pub fn delete_lesson(topic: String, lesson:String) -> Result<()> {
     let conn = Connection::open("database.db")?;
 
-    let sql = format!("DELETE FROM \"{}\" WHERE name == \"{}\"", topic, lesson);
+    let sql = format!("DELETE FROM lessons WHERE topic == \"{}\" AND name == \"{}\"", topic, lesson);
 
     conn.execute(&sql, [])?;
 
