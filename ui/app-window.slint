@@ -21,6 +21,7 @@ export component AppWindow inherits Window {
     callback add_lesson(topic: string, lesson: string);
     callback load_lessons_requested(string);
     callback delete_lesson_requested(topic: string, lesson: string);
+    callback review_lesson_requested(topic: string, lesson: string, stage: int);
 
     background: ThemeState.isLight ? LightColorPalette.Background : DarkColorPalette.Background;
 
@@ -126,6 +127,10 @@ export component AppWindow inherits Window {
 
             delete_lesson(lesson) => {
                 root.delete_lesson_requested(root.currentTopic, lesson);
+            }
+
+            review_lesson(lesson, stage) => {
+                root.review_lesson_requested(root.currentTopic, lesson, stage);
             }
         }
     }

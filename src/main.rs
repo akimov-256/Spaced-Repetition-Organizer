@@ -7,6 +7,8 @@ mod database_manager;
 use std::error::Error;
 use slint::{ModelRc, ToSharedString, VecModel};
 
+use crate::database_manager::review_lesson;
+
 slint::include_modules!();
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -110,6 +112,26 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
+    let ui_clone = ui.clone_strong();
+    let ui_clone_2 = ui.clone_strong();
+    ui_clone.on_review_lesson_requested(move |topic, lesson, stage: i32| {
+        match review_lesson(topic.to_string(), lesson.to_string(), stage) {
+            Ok(_) => {
+                match load_lessons(&ui_clone_2, topic.to_string()) {
+                    Ok(_) => {
+
+                    }
+                    Err(error) => {
+                        println!("Error loading lessons from topic {topic}: {error}");
+                    }
+                }
+            }
+            Err(error) => {
+                println!("Error reviewing lesson {lesson} from {topic}: {error}");
+            }           
+        }
+    });
+
     ui.run()?;
 
     Ok(())
@@ -141,6 +163,9 @@ fn load_lessons(app: &AppWindow, topic: String) -> Result<(), Box<dyn Error>> {
     .into_iter()
     .map(|row| LessonData {
         name: row.name.to_shared_string(),
+
+        stage: row.stage,
+        previous_review: row.previous_review,
         next_review: row.next_review,
     })
     .collect();

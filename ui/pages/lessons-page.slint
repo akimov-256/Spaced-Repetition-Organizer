@@ -14,6 +14,7 @@ export component LessonsPage inherits Rectangle {
     callback add_lesson(string);
     callback load_lessons_requested();
     callback delete_lesson(string);
+    callback review_lesson(lesson: string, stage: int);
 
     background: transparent;
 
@@ -73,13 +74,17 @@ export component LessonsPage inherits Rectangle {
                         y: 10px;
 
                         name: lessons[lessons.length - 1 - i].name;
-                        last_reviewed: "Blank";
+                        last_reviewed: lessons[lessons.length - 1 - i].previous_review;
                         next_review: lessons[lessons.length - 1 - i].next_review;
-                        stage: "Blank";
-                        duration: "Blank";
+                        stage: lessons[lessons.length - 1 - i].stage;
+                        due: "Blank";
 
                         delete_requested => {
-                            delete_lesson(lessons[lessons.length - 1 - i].name)
+                            root.delete_lesson(lessons[lessons.length - 1 - i].name);
+                        }
+
+                        review_button_pressed => {
+                            root.review_lesson(lessons[lessons.length - 1 - i].name, lessons[lessons.length - 1 - i].stage);
                         }
                     }
                 }

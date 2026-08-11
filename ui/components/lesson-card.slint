@@ -7,7 +7,7 @@ export component LessonCard inherits Rectangle {
     in-out property <string> last_reviewed;
     in-out property <string> next_review;
     in-out property <string> stage;
-    in-out property <string> duration;
+    in-out property <string> due;
 
     // Callbacks
     callback review_button_pressed();
@@ -44,7 +44,7 @@ export component LessonCard inherits Rectangle {
                 font-size: 14px;
             }
             Text {
-                text: root.stage + " · " + root.duration;
+                text: root.stage + " · " + root.due;
                 color: ThemeState.isLight ? LightColorPalette.SelectedText : DarkColorPalette.SelectedText;
                 font-size: 12px;
             }
@@ -56,6 +56,10 @@ export component LessonCard inherits Rectangle {
             Button {
                 height: 65px;
                 text: "Review";
+
+                clicked => {
+                    root.review_button_pressed()
+                }
             }
         }
 

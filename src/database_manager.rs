@@ -1,3 +1,4 @@
+use chrono::Utc;
 use rusqlite::{Connection, Result};
 use crate::models::{Lesson, Topic};
 
@@ -76,13 +77,16 @@ pub fn add_lesson(topic: String, lesson: String) -> Result<()> {
 pub fn load_lessons(topic: String) -> Result<Vec<Lesson>> {
     let conn = Connection::open("database.db")?;
 
-    let sql = format!("SELECT name, next_review FROM lessons WHERE topic == \"{}\"", topic);
+    let sql = format!("SELECT name, stage, previous_review, next_review FROM lessons WHERE topic == \"{}\"", topic);
 
     let mut statement = conn.prepare(&sql)?;
 
     let rows = statement.query_map([], |row| {
         Ok(Lesson {
             name: row.get(0)?,
+
+            stage: row.get(1)?,
+            previous_review: row.get(1)?,
             next_review: row.get(1)?
         })
     })?;
@@ -98,6 +102,16 @@ pub fn delete_lesson(topic: String, lesson:String) -> Result<()> {
     let sql = format!("DELETE FROM lessons WHERE topic == \"{}\" AND name == \"{}\"", topic, lesson);
 
     conn.execute(&sql, [])?;
+
+    Ok(())
+}
+
+pub fn review_lesson(topic: String, lesson: String, stage: i32) -> Result<()> {
+    let conn = Connection::open("database.db")?;
+
+    let now = Utc::now().timestamp();
+
+    conn.execute("UPDATE lessons SET stage = ?1, previous_review = ?2, next_review = ?3 WHERE name == ?4 AND topic == ?5", (stage + 1, now, 123456, lesson, topic))?;
 
     Ok(())
 }
