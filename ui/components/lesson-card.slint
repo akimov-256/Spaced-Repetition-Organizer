@@ -2,13 +2,16 @@ import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-
 import { VerticalBox, Button } from "std-widgets.slint";
 
 export component LessonCard inherits Rectangle {
+    // Properties
     in-out property <string> name;
     in-out property <string> last_reviewed;
     in-out property <string> next_review;
     in-out property <string> stage;
     in-out property <string> duration;
 
+    // Callbacks
     callback review_button_pressed();
+    callback delete_requested();
 
     height: 100px;
 
@@ -68,6 +71,10 @@ export component LessonCard inherits Rectangle {
             Button {
                 height: 30px;
                 text: "Delete";
+
+                clicked => {
+                    root.delete_requested();
+                }
             }
         }
     }

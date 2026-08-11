@@ -93,3 +93,13 @@ pub fn load_lessons(topic: String) -> Result<Vec<Lesson>> {
 
     Ok(lessons)
 }
+
+pub fn delete_lesson(topic: String, lesson:String) -> Result<()> {
+    let conn = Connection::open("database.db")?;
+
+    let sql = format!("DELETE FROM \"{}\" WHERE name == \"{}\"", topic, lesson);
+
+    conn.execute(&sql, [])?;
+
+    Ok(())
+}

@@ -9,18 +9,18 @@ export component AppWindow inherits Window {
     height: 570px;
     width: 1024px;
 
+    // Properties
+    property <string> topic_name: "";
+    in-out property <[TopicData]> topics: [];
+    in-out property <string> currentTopic: "";
+    in-out property <[LessonData]> lessons: [];
 
     // Callbacks
     callback create_topic_requested(string);
     callback delete_topic(string);
     callback add_lesson(topic: string, lesson: string);
     callback load_lessons_requested(string);
-
-    // Properties
-    property <string> topic_name: "";
-    in-out property <[TopicData]> topics: [];
-    in-out property <string> currentTopic: "";
-    in-out property <[LessonData]> lessons: [];
+    callback delete_lesson_requested(topic: string, lesson: string);
 
     background: ThemeState.isLight ? LightColorPalette.Background : DarkColorPalette.Background;
 
@@ -122,6 +122,10 @@ export component AppWindow inherits Window {
 
             load_lessons_requested => {
                 root.load_lessons_requested(root.currentTopic);
+            }
+
+            delete_lesson(lesson) => {
+                root.delete_lesson_requested(root.currentTopic, lesson);
             }
         }
     }

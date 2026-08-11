@@ -13,6 +13,7 @@ export component LessonsPage inherits Rectangle {
     // Callbacks
     callback add_lesson(string);
     callback load_lessons_requested();
+    callback delete_lesson(string);
 
     background: transparent;
 
@@ -76,6 +77,10 @@ export component LessonsPage inherits Rectangle {
                         next_review: lessons[lessons.length - 1 - i].next_review;
                         stage: "Blank";
                         duration: "Blank";
+
+                        delete_requested => {
+                            delete_lesson(lessons[lessons.length - 1 - i].name)
+                        }
                     }
                 }
             }

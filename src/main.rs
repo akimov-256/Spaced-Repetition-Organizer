@@ -89,6 +89,26 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         }
     });
+    
+    let ui_clone = ui.clone_strong();
+    let ui_clone_2 = ui.clone_strong();
+    ui_clone.on_delete_lesson_requested(move |topic, lesson| {
+        match database_manager::delete_lesson(topic.to_string(), lesson.to_string()) {
+            Ok(_) => {
+                match load_lessons(&ui_clone_2, topic.to_string()) {
+                    Ok(_) => {
+
+                    }
+                    Err(error) => {
+                        println!("Error loading lessons from topic {topic}: {error}")
+                    }
+                }
+            }
+            Err(error) => {
+                println!("Error deleting lesson {lesson} from {topic}: {error}");
+            }
+        }
+    });
 
     ui.run()?;
 
