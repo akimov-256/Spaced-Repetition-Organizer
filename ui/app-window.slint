@@ -91,14 +91,14 @@ export component AppWindow inherits Window {
                             lessons: root.topics[topics.length - 1 - i].lessons;
                             due: root.topics[topics.length - 1 - i].due;
 
-                            isSelected: root.currentTopic == topic.title;
+                            isSelected: root.currentTopic == root.topics[topics.length - 1 - i].title;
 
                             delete_requested => {
-                                delete_topic(topic.title);
+                                delete_topic(root.topics[topics.length - 1 - i].title);
                             }
 
                             selected => {
-                                root.currentTopic = topic.title;
+                                root.currentTopic = root.topics[topics.length - 1 - i].title;
                                 load_lessons_requested(root.currentTopic)
                             }
                         }
