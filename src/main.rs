@@ -165,8 +165,8 @@ fn load_lessons(app: &AppWindow, topic: String) -> Result<(), Box<dyn Error>> {
         name: row.name.to_shared_string(),
 
         stage: row.stage,
-        previous_review: row.previous_review,
-        next_review: row.next_review,
+        previous_review: row.previous_review.to_shared_string(),
+        next_review: row.next_review.to_shared_string(),
     })
     .collect();
 

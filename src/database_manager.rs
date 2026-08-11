@@ -1,4 +1,4 @@
-use chrono::Utc;
+use chrono::{DateTime, Utc, format::Numeric::Timestamp};
 use rusqlite::{Connection, Result};
 use crate::models::{Lesson, Topic};
 
@@ -82,13 +82,26 @@ pub fn load_lessons(topic: String) -> Result<Vec<Lesson>> {
     let mut statement = conn.prepare(&sql)?;
 
     let rows = statement.query_map([], |row| {
-        Ok(Lesson {
-            name: row.get(0)?,
+        let previous_review: Option<i64> = row.get(2)?;
 
-            stage: row.get(1)?,
-            previous_review: row.get(1)?,
-            next_review: row.get(1)?
-        })
+        let date_formatted = match previous_review {
+            Some(timestamp) => {
+                DateTime::from_timestamp(timestamp, 0)
+                    .map(|date| date.format("%d-%m-%Y").to_string())
+                    .unwrap_or_else(|| "Invalid date".to_string())
+            }
+            None => "Never".to_string(),
+        };
+
+        Ok(
+            Lesson {
+                name: row.get(0)?,
+
+                stage: row.get(1)?,
+                previous_review: date_formatted,
+                next_review: format!("blank")
+            }
+        )
     })?;
 
     let lessons = rows.collect::<Result<Vec<Lesson>>>()?;
