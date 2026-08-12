@@ -5,7 +5,7 @@ mod models;
 mod database_manager;
 
 use std::error::Error;
-use rfd::MessageDialog;
+use rfd::{MessageDialog, MessageDialogResult};
 use slint::{ModelRc, ToSharedString, VecModel};
 
 use crate::database_manager::review_lesson;
@@ -46,26 +46,38 @@ fn main() -> Result<(), Box<dyn Error>> {
     let ui_clone = ui.clone_strong();
     let ui_clone_2 = ui.clone_strong();
     ui_clone.on_delete_topic(move |name| {
-        match database_manager::delete_topic(name.to_string()) {
-            Ok(_) => {
-                match load_topics(&ui_clone_2) {
+        match MessageDialog::new()
+            .set_title("Delete Lesson")
+            .set_description(format!("You will delete topic {name}, are you sure?"))
+            .set_buttons(rfd::MessageButtons::OkCancel)
+            .show() {
+            MessageDialogResult::Ok => {
+                match database_manager::delete_topic(name.to_string()) {
                     Ok(_) => {
-
+                        match load_topics(&ui_clone_2) {
+                            Ok(_) => {
+                            
+                            }
+                            Err(error) => {
+                                MessageDialog::new()
+                                .set_title("Error")
+                                .set_description(format!("Error loading topics: {error}"))
+                                .show();
+                            }
+                        }
                     }
                     Err(error) => {
                         MessageDialog::new()
                         .set_title("Error")
-                        .set_description(format!("Error loading topics: {error}"))
+                        .set_description(format!("Error deleting topic {name}: {error}"))
                         .show();
                     }
                 }
             }
-            Err(error) => {
-                MessageDialog::new()
-                .set_title("Error")
-                .set_description(format!("Error deleting topic {name}: {error}"))
-                .show();
+            MessageDialogResult::Cancel => {
+
             }
+            _ => {}
         }
     });
 
@@ -117,26 +129,38 @@ fn main() -> Result<(), Box<dyn Error>> {
     let ui_clone = ui.clone_strong();
     let ui_clone_2 = ui.clone_strong();
     ui_clone.on_delete_lesson_requested(move |topic, lesson| {
-        match database_manager::delete_lesson(topic.to_string(), lesson.to_string()) {
-            Ok(_) => {
-                match load_lessons(&ui_clone_2, topic.to_string()) {
+        match MessageDialog::new()
+            .set_title("Delete Lesson")
+            .set_description(format!("You will delete lesson {lesson}, are you sure?"))
+            .set_buttons(rfd::MessageButtons::OkCancel)
+            .show() {
+            MessageDialogResult::Ok => {
+                match database_manager::delete_lesson(topic.to_string(), lesson.to_string()) {
                     Ok(_) => {
+                        match load_lessons(&ui_clone_2, topic.to_string()) {
+                            Ok(_) => {
 
+                            }
+                            Err(error) => {
+                                MessageDialog::new()
+                                .set_title("Error")
+                                .set_description(format!("Error loading lessons from topic {topic}: {error}"))
+                                .show();
+                            }
+                        }
                     }
                     Err(error) => {
                         MessageDialog::new()
                         .set_title("Error")
-                        .set_description(format!("Error loading lessons from topic {topic}: {error}"))
+                        .set_description(format!("Error deleting lesson {lesson} from {topic}: {error}"))
                         .show();
                     }
                 }
             }
-            Err(error) => {
-                MessageDialog::new()
-                .set_title("Error")
-                .set_description(format!("Error deleting lesson {lesson} from {topic}: {error}"))
-                .show();
+            MessageDialogResult::Cancel => {
+
             }
+            _ => {}
         }
     });
 
