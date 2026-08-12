@@ -5,6 +5,7 @@ mod models;
 mod database_manager;
 
 use std::error::Error;
+use rfd::MessageDialog;
 use slint::{ModelRc, ToSharedString, VecModel};
 
 use crate::database_manager::review_lesson;
@@ -26,12 +27,18 @@ fn main() -> Result<(), Box<dyn Error>> {
 
                     }
                     Err(error) => {
-                        print!("Error loading topics: {error}");
+                        MessageDialog::new()
+                        .set_title("Error")
+                        .set_description(format!("Error loading topics: {error}"))
+                        .show();
                     }
                 }
             }
             Err(error) => {
-                println!("Error creating topic {name}: {error}");
+                MessageDialog::new()
+                .set_title("Error")
+                .set_description(format!("Error creating topic {name}: {error}"))
+                .show();
             }
         }
     });
@@ -46,12 +53,18 @@ fn main() -> Result<(), Box<dyn Error>> {
 
                     }
                     Err(error) => {
-                        print!("Error loading topics: {error}");
+                        MessageDialog::new()
+                        .set_title("Error")
+                        .set_description(format!("Error loading topics: {error}"))
+                        .show();
                     }
                 }
             }
             Err(error) => {
-                println!("Error deleting topic {name}: {error}");
+                MessageDialog::new()
+                .set_title("Error")
+                .set_description(format!("Error deleting topic {name}: {error}"))
+                .show();
             }
         }
     });
@@ -66,12 +79,18 @@ fn main() -> Result<(), Box<dyn Error>> {
 
                     }
                     Err(error) => {
-                        println!("Error loading lessons for topic {topic}: {error}");
+                        MessageDialog::new()
+                        .set_title("Error")
+                        .set_description(format!("Error loading lessons for topic {topic}: {error}"))
+                        .show();
                     }
                 }
             }
             Err(error) => {
-                println!("Error adding lesson {lesson}: {error}");
+                MessageDialog::new()
+                .set_title("Error")
+                .set_description(format!("Error adding lesson {lesson}: {error}"))
+                .show();
             }
         }
     });
@@ -87,7 +106,10 @@ fn main() -> Result<(), Box<dyn Error>> {
 
             }
             Err(error) => {
-                println!("Error loading lessons for topic {topic}: {error}");
+                MessageDialog::new()
+                .set_title("Error")
+                .set_description(format!("Error loading lessons for topic {topic}: {error}"))
+                .show();
             }
         }
     });
@@ -102,12 +124,18 @@ fn main() -> Result<(), Box<dyn Error>> {
 
                     }
                     Err(error) => {
-                        println!("Error loading lessons from topic {topic}: {error}")
+                        MessageDialog::new()
+                        .set_title("Error")
+                        .set_description(format!("Error loading lessons from topic {topic}: {error}"))
+                        .show();
                     }
                 }
             }
             Err(error) => {
-                println!("Error deleting lesson {lesson} from {topic}: {error}");
+                MessageDialog::new()
+                .set_title("Error")
+                .set_description(format!("Error deleting lesson {lesson} from {topic}: {error}"))
+                .show();
             }
         }
     });
@@ -122,12 +150,18 @@ fn main() -> Result<(), Box<dyn Error>> {
 
                     }
                     Err(error) => {
-                        println!("Error loading lessons from topic {topic}: {error}");
+                        MessageDialog::new()
+                        .set_title("Error")
+                        .set_description(format!("Error loading lessons from topic {topic}: {error}"))
+                        .show();
                     }
                 }
             }
             Err(error) => {
-                println!("Error reviewing lesson {lesson} from {topic}: {error}");
+                MessageDialog::new()
+                .set_title("Error")
+                .set_description(format!("Error reviewing lesson {lesson} from {topic}: {error}"))
+                .show();
             }           
         }
     });

@@ -10,6 +10,7 @@ slint = "1.17.1"
 rusqlite = { version = "0.40.2", features = ["bundled"] }
 zune-jpeg = { version = "0.5.13", features = ["log"] }
 chrono = "0.4"
+rfd = "0.17.2"
 
 [build-dependencies]
 slint-build = "1.17.1"
