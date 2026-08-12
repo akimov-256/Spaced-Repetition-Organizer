@@ -61,8 +61,10 @@ export component AppWindow inherits Window {
                         text <=> root.topic_name;
 
                         accepted() => {
-                            create_topic_requested(root.topic_name);
-                            root.topic_name = "";
+                            if root.topic_name != "" {
+                                create_topic_requested(root.topic_name);
+                                root.topic_name = "";
+                            }
                         }
                     }
 

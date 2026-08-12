@@ -40,13 +40,17 @@ export component LessonsPage inherits Rectangle {
                 text <=> root.new_lesson_text;
 
                 accepted() => {
-                    add_lesson(root.new_lesson_text);
-                    root.new_lesson_text = "";
+                    if root.new_lesson_text != "" {
+                        add_lesson(root.new_lesson_text);
+                        root.new_lesson_text = "";
+                    }
                 }
             }
 
             Button {
                 text: "+ Add lesson";
+
+                enabled: root.new_lesson_text != "";
 
                 clicked => {
                     add_lesson(root.new_lesson_text);
