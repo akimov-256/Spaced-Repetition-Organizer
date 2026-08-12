@@ -77,7 +77,7 @@ export component LessonsPage inherits Rectangle {
                         last_reviewed: lessons[lessons.length - 1 - i].previous_review;
                         next_review: lessons[lessons.length - 1 - i].next_review;
                         stage: lessons[lessons.length - 1 - i].stage;
-                        due: "Blank";
+                        due: lessons[lessons.length - 1 - i].due;
 
                         delete_requested => {
                             root.delete_lesson(lessons[lessons.length - 1 - i].name);

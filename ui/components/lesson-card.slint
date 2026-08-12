@@ -44,7 +44,7 @@ export component LessonCard inherits Rectangle {
                 font-size: 14px;
             }
             Text {
-                text: root.stage + " · " + root.due;
+                text: root.stage + " · " + ((root.due == "0 days.") ? "today" : root.due);
                 color: ThemeState.isLight ? LightColorPalette.SelectedText : DarkColorPalette.SelectedText;
                 font-size: 12px;
             }
@@ -56,6 +56,8 @@ export component LessonCard inherits Rectangle {
             Button {
                 height: 65px;
                 text: "Review";
+
+                enabled: due == "0 days.";
 
                 clicked => {
                     root.review_button_pressed()

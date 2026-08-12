@@ -22,7 +22,7 @@ pub fn initialize_database() -> Result<()> {
                 topic TEXT NOT NULL,
                 
                 stage INTEGER NOT NULL DEFAULT 1,
-                interval INTEGER NOT NULL DEFAULT 1,
+                interval INTEGER NOT NULL DEFAULT 2,
 
                 previous_review INTEGER,
                 next_review INTEGER NOT NULL
@@ -104,7 +104,7 @@ pub fn load_lessons(topic: String) -> Result<Vec<Lesson>> {
         let next_formatted = next_review.unwrap()
             .format("%d-%m-%Y").to_string();
 
-        let due = next_review.unwrap().signed_duration_since(Utc::now()).num_days();
+        let due = next_review.unwrap().signed_duration_since(Utc::now()).num_days() + 1;
 
         Ok(
             Lesson {
@@ -113,7 +113,7 @@ pub fn load_lessons(topic: String) -> Result<Vec<Lesson>> {
                 stage: row.get(1)?,
                 previous_review: previous_formatted,
                 next_review: next_formatted,
-                due: due.to_string()
+                due: due.to_string() + " days."
             }
         )
     })?;
@@ -146,7 +146,7 @@ pub fn review_lesson(topic: String, lesson: String, stage: i32) -> Result<()> {
     )?;
 
     // Calculate new interval
-    let new_interval: i64 = (interval as f32 * 1.5) as i64;
+    let new_interval: i64 = (interval * 2) as i64;
 
     let next_review = Utc::now() + Duration::days(new_interval);
 
