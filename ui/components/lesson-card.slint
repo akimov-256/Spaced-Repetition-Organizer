@@ -12,6 +12,7 @@ export component LessonCard inherits Rectangle {
     // Callbacks
     callback review_button_pressed();
     callback delete_requested();
+    callback edit_requested();
 
     height: 100px;
 
@@ -72,6 +73,10 @@ export component LessonCard inherits Rectangle {
             Button {
                 height: 30px;
                 text: "Edit";
+
+                clicked => {
+                    root.edit_requested();
+                }
             }
 
             Button {

@@ -1,0 +1,83 @@
+
+import { LineEdit, Button, } from "std-widgets.slint";
+import { ThemeState, LightColorPalette, DarkColorPalette } from "../theme/color-palette.slint";
+
+export component LineInputDialog inherits Rectangle {
+    x: 100px;
+    y: 100px;
+
+    height: 120px;
+    width: 350px;
+
+    visible: false;
+
+    background: ThemeState.isLight ? LightColorPalette.SideBar : DarkColorPalette.SideBar;
+    border-radius: 10px;
+    border-color: ThemeState.isLight ? LightColorPalette.Border : DarkColorPalette.Border;
+    border-width: 1px;
+
+    area := TouchArea {
+        y: 0px;
+
+        height: 20px;
+        width: 100%;
+    
+        moved => {
+            if (area.pressed) {
+                debug("dragging", area.mouse-x, area.pressed-x);
+                root.x += area.mouse-x - area.pressed-x;
+                root.y += area.mouse-y - area.pressed-y;
+            }
+        }
+    }
+
+    VerticalLayout {
+        alignment: center;
+        padding: 10px;
+        spacing: 10px;
+
+        HorizontalLayout {
+            alignment: center;
+            spacing: 10px;
+
+            Text {
+                vertical-alignment: center;
+                text: "Enter new name";
+                font-size: 16px;
+            }
+
+            LineEdit {
+                height: 30px;
+
+            }
+        }
+
+        HorizontalLayout {
+            alignment: center;
+            spacing: 20px;
+
+            Button {
+                height: 35px;
+                width: 100px;
+
+                text: "Cancel";
+
+                clicked => {
+                    root.visible = false;
+                }
+            }
+
+            Button {
+                height: 35px;
+                width: 100px;
+
+                text: "Save";
+
+                clicked => {
+                    root.visible = false;
+                }
+            }
+        }
+    }
+    
+}

@@ -4,6 +4,7 @@ import { DarkColorPalette, LightColorPalette, ThemeState } from "theme/color-pal
 import { TopicData, LessonData } from "models.slint";
 import { LessonsPage } from "pages/lessons-page.slint";
 import { NoTopicPage } from "pages/no-topic-page.slint";
+import { LineInputDialog } from "dialogs/line-input-dialog.slint";
 
 export component AppWindow inherits Window {
     height: 570px;
@@ -134,6 +135,15 @@ export component AppWindow inherits Window {
             review_lesson(lesson, stage) => {
                 root.review_lesson_requested(root.currentTopic, lesson, stage);
             }
+
+            rename_lesson(lesson) => {
+                rename-dialog.visible = true;
+            }
         }
+    }
+
+    // Popups
+    rename-dialog := LineInputDialog {
+
     }
 }

@@ -15,6 +15,7 @@ export component LessonsPage inherits Rectangle {
     callback load_lessons_requested();
     callback delete_lesson(string);
     callback review_lesson(lesson: string, stage: int);
+    callback rename_lesson(lesson: string);
 
     background: transparent;
 
@@ -89,6 +90,10 @@ export component LessonsPage inherits Rectangle {
 
                         review_button_pressed => {
                             root.review_lesson(lessons[lessons.length - 1 - i].name, lessons[lessons.length - 1 - i].stage);
+                        }
+
+                        edit_requested => {
+                            root.rename_lesson(lessons[lessons.length - 1 - i].name);
                         }
                     }
                 }
