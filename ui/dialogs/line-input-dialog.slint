@@ -9,6 +9,13 @@ export component LineInputDialog inherits Rectangle {
     height: 120px;
     width: 350px;
 
+    // Properties
+    in-out property <string> tip;
+    in-out property <string> input: "";
+
+    // Callbacks
+    callback accepted(string);
+
     visible: false;
 
     background: ThemeState.isLight ? LightColorPalette.SideBar : DarkColorPalette.SideBar;
@@ -42,13 +49,14 @@ export component LineInputDialog inherits Rectangle {
 
             Text {
                 vertical-alignment: center;
-                text: "Enter new name";
+                text: root.tip;
                 font-size: 16px;
             }
 
             LineEdit {
                 height: 30px;
 
+                text <=> root.input;
             }
         }
 
@@ -75,6 +83,7 @@ export component LineInputDialog inherits Rectangle {
 
                 clicked => {
                     root.visible = false;
+                    accepted(root.input);
                 }
             }
         }
