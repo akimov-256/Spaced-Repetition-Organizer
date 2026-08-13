@@ -8,8 +8,6 @@ use std::error::Error;
 use rfd::{MessageDialog, MessageDialogResult};
 use slint::{ModelRc, ToSharedString, VecModel};
 
-use crate::database_manager::review_lesson;
-
 slint::include_modules!();
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -167,7 +165,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let ui_clone = ui.clone_strong();
     let ui_clone_2 = ui.clone_strong();
     ui_clone.on_review_lesson_requested(move |topic, lesson, stage: i32| {
-        match review_lesson(topic.to_string(), lesson.to_string(), stage) {
+        match database_manager::review_lesson(topic.to_string(), lesson.to_string(), stage) {
             Ok(_) => {
                 match load_lessons(&ui_clone_2, topic.to_string()) {
                     Ok(_) => {
@@ -185,6 +183,32 @@ fn main() -> Result<(), Box<dyn Error>> {
                 MessageDialog::new()
                 .set_title("Error")
                 .set_description(format!("Error reviewing lesson {lesson} from {topic}: {error}"))
+                .show();
+            }           
+        }
+    });
+
+    let ui_clone = ui.clone_strong();
+    let ui_clone_2 = ui.clone_strong();
+    ui_clone.on_rename_lesson_requested(move |topic, lesson, new| {
+        match database_manager::rename_lesson(topic.to_string(), lesson.to_string(), new.to_string()) {
+            Ok(_) => {
+                match load_lessons(&ui_clone_2, topic.to_string()) {
+                    Ok(_) => {
+
+                    }
+                    Err(error) => {
+                        MessageDialog::new()
+                        .set_title("Error")
+                        .set_description(format!("Error loading lessons from topic {topic}: {error}"))
+                        .show();
+                    }
+                }
+            }
+            Err(error) => {
+                MessageDialog::new()
+                .set_title("Error")
+                .set_description(format!("Error renaming lesson {lesson} to {new} from {topic}: {error}"))
                 .show();
             }           
         }

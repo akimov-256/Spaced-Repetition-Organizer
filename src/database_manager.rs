@@ -1,6 +1,4 @@
-use std::fmt::format;
-
-use chrono::{DateTime, Datelike, Duration, Utc, format::Numeric::Timestamp};
+use chrono::{DateTime, Duration, Utc};
 use rusqlite::{Connection, Result};
 use crate::models::{Lesson, Topic};
 
@@ -153,6 +151,16 @@ pub fn review_lesson(topic: String, lesson: String, stage: i32) -> Result<()> {
     let now = Utc::now().timestamp();
 
     conn.execute("UPDATE lessons SET stage = ?1, interval = ?2, previous_review = ?3, next_review = ?4 WHERE name == ?5 AND topic == ?6", (stage + 1, new_interval, now, next_review.timestamp(), lesson, topic))?;
+
+    Ok(())
+}
+
+pub fn rename_lesson(topic: String, lesson: String, new: String) -> Result<()> {
+    let conn = Connection::open("database.db")?;
+
+    let sql = format!("UPDATE lessons SET name = \"{}\" WHERE topic == \"{}\" AND name = \"{}\"", new, topic, lesson);
+
+    conn.execute(&sql, [])?;
 
     Ok(())
 }

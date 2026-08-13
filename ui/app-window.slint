@@ -13,8 +13,9 @@ export component AppWindow inherits Window {
     // Properties
     property <string> topic_name: "";
     in-out property <[TopicData]> topics: [];
-    in-out property <string> currentTopic: "";
+    in-out property <string> current_topic: "";
     in-out property <[LessonData]> lessons: [];
+    in-out property <string> lesson_to_edit: "";
 
     // Callbacks
     callback create_topic_requested(string);
@@ -23,6 +24,7 @@ export component AppWindow inherits Window {
     callback load_lessons_requested(string);
     callback delete_lesson_requested(topic: string, lesson: string);
     callback review_lesson_requested(topic: string, lesson: string, stage: int);
+    callback rename_lesson_requested(topic: string, lesson: string, new: string);
 
     background: ThemeState.isLight ? LightColorPalette.Background : DarkColorPalette.Background;
 
@@ -95,15 +97,15 @@ export component AppWindow inherits Window {
                             lessons: root.topics[topics.length - 1 - i].lessons;
                             due: root.topics[topics.length - 1 - i].due;
 
-                            isSelected: root.currentTopic == root.topics[topics.length - 1 - i].title;
+                            isSelected: root.current_topic == root.topics[topics.length - 1 - i].title;
 
                             delete_requested => {
                                 delete_topic(root.topics[topics.length - 1 - i].title);
                             }
 
                             selected => {
-                                root.currentTopic = root.topics[topics.length - 1 - i].title;
-                                load_lessons_requested(root.currentTopic)
+                                root.current_topic = root.topics[topics.length - 1 - i].title;
+                                load_lessons_requested(root.current_topic)
                             }
                         }
                     }
@@ -112,32 +114,33 @@ export component AppWindow inherits Window {
         }   
 
         // Content space
-        if (root.currentTopic == "" || root.topics.length == 0) : NoTopicPage {
+        if (root.current_topic == "" || root.topics.length == 0) : NoTopicPage {
 
         }
 
-        if (root.currentTopic != "" && root.topics.length > 0) : LessonsPage {
-            topic: root.currentTopic;
+        if (root.current_topic != "" && root.topics.length > 0) : LessonsPage {
+            topic: root.current_topic;
             lessons: root.lessons;
 
             add_lesson(lesson) => {
-                root.add_lesson(root.currentTopic, lesson);
+                root.add_lesson(root.current_topic, lesson);
             }
 
             load_lessons_requested => {
-                root.load_lessons_requested(root.currentTopic);
+                root.load_lessons_requested(root.current_topic);
             }
 
             delete_lesson(lesson) => {
-                root.delete_lesson_requested(root.currentTopic, lesson);
+                root.delete_lesson_requested(root.current_topic, lesson);
             }
 
             review_lesson(lesson, stage) => {
-                root.review_lesson_requested(root.currentTopic, lesson, stage);
+                root.review_lesson_requested(root.current_topic, lesson, stage);
             }
 
             rename_lesson(lesson) => {
                 rename-dialog.visible = true;
+                root.lesson_to_edit = lesson;
             }
         }
     }
@@ -145,5 +148,10 @@ export component AppWindow inherits Window {
     // Popups
     rename-dialog := LineInputDialog {
         tip: "New lesson name:";
+
+        accepted(new_name) => {
+            root.rename_lesson_requested(root.current_topic, root.lesson_to_edit, new_name);
+            root.lesson_to_edit = "";
+        }
     }
 }
