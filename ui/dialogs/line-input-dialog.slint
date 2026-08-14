@@ -57,6 +57,13 @@ export component LineInputDialog inherits Rectangle {
                 height: 30px;
 
                 text <=> root.input;
+
+                accepted => {
+                    if (root.input != ""){
+                        root.visible = false;
+                        accepted(root.input);
+                    }
+                }
             }
         }
 
@@ -80,6 +87,8 @@ export component LineInputDialog inherits Rectangle {
                 width: 100px;
 
                 text: "Save";
+
+                enabled: root.input != "";
 
                 clicked => {
                     root.visible = false;
