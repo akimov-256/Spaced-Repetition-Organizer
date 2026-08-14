@@ -49,7 +49,10 @@ export component LessonsPage inherits Rectangle {
             }
 
             Button {
-                text: "+ Add lesson";
+                text: "Add lesson";
+
+                icon: @image-url("../../assets/icons/add.svg");
+                colorize-icon: true;
 
                 enabled: root.new_lesson_text != "";
 

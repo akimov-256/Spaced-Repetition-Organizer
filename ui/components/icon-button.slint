@@ -1,0 +1,34 @@
+import { ThemeState, DarkColorPalette, LightColorPalette } from "../theme/color-palette.slint";
+
+export component IconButton {
+    in property <image> icon;
+    in property <length> icon-size: 16px;
+    in property <bool> enabled: true;
+    property <color> background-color: ThemeState.isLight ? LightColorPalette.Background : DarkColorPalette.Background;
+    callback clicked();
+
+    width: icon-size;
+    height: icon-size;
+
+    opacity: enabled ? 1.0 : 0.4;
+
+    Rectangle {
+        border-radius: 4px;
+        background: !root.enabled ? background-color
+                   : touch.pressed ? background-color.darker(0.2)
+                   : touch.has-hover ? background-color.darker(0.1)
+                   : background-color;
+
+        Image {
+            source: root.icon;
+            width: root.icon-size;
+            height: root.icon-size;
+            colorize: ThemeState.isLight ? LightColorPalette.Text : DarkColorPalette.Text;
+        }
+
+        touch := TouchArea {
+            enabled: root.enabled;
+            clicked => { root.clicked(); }
+        }
+    }
+}

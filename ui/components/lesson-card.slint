@@ -58,6 +58,9 @@ export component LessonCard inherits Rectangle {
                 height: 65px;
                 text: "Review";
 
+                icon: @image-url("../../assets/icons/done.svg");
+                colorize-icon: true;
+
                 enabled: due == "0 days.";
 
                 clicked => {
@@ -74,6 +77,10 @@ export component LessonCard inherits Rectangle {
                 height: 30px;
                 text: "Edit";
 
+                icon: @image-url("../../assets/icons/edit.svg");
+                icon-size: 16px;
+                colorize-icon: true;
+
                 clicked => {
                     root.edit_requested();
                 }
@@ -82,6 +89,10 @@ export component LessonCard inherits Rectangle {
             Button {
                 height: 30px;
                 text: "Delete";
+
+                icon: @image-url("../../assets/icons/delete.svg");
+                icon-size: 16px;
+                colorize-icon: true;
 
                 clicked => {
                     root.delete_requested();
