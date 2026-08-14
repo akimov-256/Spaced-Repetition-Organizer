@@ -164,3 +164,17 @@ pub fn rename_lesson(topic: String, lesson: String, new: String) -> Result<()> {
 
     Ok(())
 }
+
+pub fn rename_topic(topic: String, new: String) -> Result<()> {
+    let conn = Connection::open("database.db")?;
+
+    let sql = format!("UPDATE topics SET name = \"{}\" WHERE name == \"{}\"", new, topic);
+
+    conn.execute(&sql, [])?;
+
+    let sql = format!("UPDATE lessons SET topic = \"{}\" WHERE topic == \"{}\"", new, topic);
+
+    conn.execute(&sql, [])?;
+
+    Ok(())
+}

@@ -81,6 +81,32 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let ui_clone = ui.clone_strong();
     let ui_clone_2 = ui.clone_strong();
+    ui_clone.on_rename_topic_requested(move |topic, new| {
+        match database_manager::rename_topic(topic.to_string(), new.to_string()) {
+            Ok(_) => {
+                match load_topics(&ui_clone_2) {
+                    Ok(_) => {
+
+                    }
+                    Err(error) => {
+                        MessageDialog::new()
+                        .set_title("Error")
+                        .set_description(format!("Error loading topics: {error}"))
+                        .show();
+                    }
+                }
+            }
+            Err(error) => {
+                MessageDialog::new()
+                .set_title("Error")
+                .set_description(format!("Error renaming topic {topic} to {new}: {error}"))
+                .show();
+            }           
+        }
+    });
+
+    let ui_clone = ui.clone_strong();
+    let ui_clone_2 = ui.clone_strong();
     ui_clone.on_add_lesson(move |topic, lesson| {
         match database_manager::add_lesson(topic.to_string(), lesson.to_string()) {
             Ok(_) => {
