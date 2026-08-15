@@ -1,5 +1,5 @@
 [package]
-name = "Spaced_Repetition_Organizer"
+name = "SRO"
 version = "0.0.0"
 edition = "2024"
 
