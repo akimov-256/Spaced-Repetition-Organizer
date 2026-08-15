@@ -1,38 +1,133 @@
-# Slint Rust Template
+<div align="center">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:003ca0,100:003cf0&height=220&section=header&text=Spaced%20Repetition%20Organizer&fontSize=38&fontColor=FFFFFF&fontFamily=Lexend&animation=fadeIn&fontAlignY=38" alt="Quantum banner">
 
-A template for a Rust application that's using [Slint](https://slint.rs/) for the user interface.
+<img src="assets/app-icon.svg" alt="SRO Logo" width="120" height="120">
+
+# Spaced Repetition Organizer
+
+**A fast, native spaced repetition study companion built with Rust and Slint.**
+
+[![Rust](https://img.shields.io/badge/Rust-003CDD?style=flat&logo=rust&logoColor=white)](https://www.rust-lang.org/)
+[![Slint](https://img.shields.io/badge/UI-Slint-003CDD?style=flat)](https://slint.dev/)
+[![Platform](https://img.shields.io/badge/Platform-Windows-003CDD?style=flat)](#)
+[![License](https://img.shields.io/badge/License-MIT-003CDD?style=flat)](#license)
+
+</div>
+
+<br>
+
+<div align="center">
+<img src="https://placehold.co/1000x4/003cdd/003cdd" width="100%" height="4">
+</div>
+
+<br>
 
 ## About
 
-This template helps you get started developing a Rust application with Slint as toolkit
-for the user interface. It demonstrates the integration between the `.slint` UI markup and
-Rust code, how to react to callbacks, get and set properties, and use basic widgets.
+**SRO (Spaced Repetition Organizer)** helps you plan, schedule, and review study material using spaced repetition principles. Organize topics into lessons, track review intervals, and stay on top of what needs revisiting — all in a lightweight native desktop app with no browser overhead.
 
-## Usage
+<br>
 
-1. Install Rust by following its [getting-started guide](https://www.rust-lang.org/learn/get-started).
-   Once this is done, you should have the `rustc` compiler and the `cargo` build system installed in your `PATH`.
-2. Download and extract the [ZIP archive of this repository](https://github.com/slint-ui/slint-rust-template/archive/refs/heads/main.zip).
-3. Rename the extracted directory and change into it:
-    ```
-    mv slint-rust-template-main my-project
-    cd my-project    
-    ```
-4. Build with `cargo`:
-    ```
-    cargo build
-    ```
-5. Run the application binary:
-    ```
-    cargo run
-    ```
+## ✨ Features
 
-We recommend using an IDE for development, along with our [LSP-based IDE integration for `.slint` files](https://github.com/slint-ui/slint/blob/master/tools/lsp/README.md). You can also load this project directly in [Visual Studio Code](https://code.visualstudio.com) and install our [Slint extension](https://marketplace.visualstudio.com/items?itemName=Slint.slint).
+- 📚 **Topics & Lessons** — organize study material into structured topics with individual lessons
+- 🔁 **Spaced Repetition Scheduling** — automatic interval-based review scheduling
+- ⚡ **Native Performance** — instant startup, low memory footprint, no Electron
+- 💾 **Local-First** — your data stays on your machine
 
-## Next Steps
+<br>
 
-We hope that this template helps you get started, and that you enjoy exploring making user interfaces with Slint. To learn more
-about the Slint APIs and the `.slint` markup language, check out our [online documentation](https://slint.dev/docs).
+## 🖼️ Screenshots
 
-Don't forget to edit this readme to replace it by yours, and edit the `name =` field in `Cargo.toml` to match the name of your
-project.
+<div align="center">
+<img src="assets/preview/main-view.png" alt="Main window" width="60%">
+<br><br>
+<img src="assets/preview/lessons-view.png" alt="Lesson view" width="60%">
+</div>
+
+<br>
+
+## 🛠️ Tech Stack
+
+| Layer       | Technology     |
+|-------------|----------------|
+| Language    | Rust           |
+| UI Toolkit  | [Slint](https://slint.dev/) |
+| Platform    | Windows        |
+
+<br>
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Rust](https://www.rust-lang.org/tools/install) (stable toolchain)
+- Cargo (bundled with Rust)
+
+### Build & Run
+
+```bash
+git clone https://github.com/yourusername/SRO.git
+cd SRO
+cargo run --release
+```
+
+### Build for Release
+
+```bash
+cargo build --release
+```
+
+The compiled binary will be available under `target/release/`.
+
+<br>
+
+## 📁 Project Structure
+
+```
+SRO/
+├── src/
+│   ├── main.rs
+│   ├── database_manager.rs
+│   └── models.rs
+├── ui/
+│   ├── app-window.slint
+│   ├── models.slint
+│   ├── components/
+│   ├── dialogs/
+│   ├── pages/
+│   └── theme/
+├── assets/
+│   ├── icons/
+│   └── app-icon.png
+├── Cargo.toml
+└── README.md
+```
+
+<br>
+
+## 🗺️ Roadmap
+
+- [ ] Import/export decks
+- [ ] Statistics dashboard
+- [ ] Custom review algorithms
+- [ ] Cross-platform builds (macOS, Linux)
+
+<br>
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+<br>
+
+<div align="center">
+<img src="https://placehold.co/1000x4/003cdd/003cdd" width="100%" height="4">
+
+<br><br>
+
+Made with 🦀 and 💙
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:003ca0,100:003cf0&height=150&section=footer&animation=fadeIn" alt="Quantum footer banner">
+
+</div>
