@@ -7,10 +7,11 @@
 
 **A fast, native spaced repetition study companion built with Rust and Slint.**
 
-[![Rust](https://img.shields.io/badge/Rust-003CDD?style=flat&logo=rust&logoColor=white)](https://www.rust-lang.org/)
-[![Slint](https://img.shields.io/badge/UI-Slint-003CDD?style=flat)](https://slint.dev/)
-[![Platform](https://img.shields.io/badge/Platform-Windows-003CDD?style=flat)](#)
-[![License](https://img.shields.io/badge/License-MIT-003CDD?style=flat)](#license)
+<img src="https://github.com/akimov-256/Quantum/actions/workflows/ci.yml/badge.svg" alt="Build Status">
+<img src="https://img.shields.io/badge/Rust-003CDD?style=flat&logo=rust&logoColor=white">
+<img src="https://img.shields.io/badge/UI-Slint-003CDD?style=flat">
+<img src="https://img.shields.io/badge/Platform-Windows-003CDD?style=flat">
+<img src="https://img.shields.io/badge/License-MIT-003CDD?style=flat">
 
 </div>
 
