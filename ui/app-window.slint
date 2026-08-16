@@ -6,6 +6,7 @@ import { LessonsPage } from "pages/lessons-page.slint";
 import { NoTopicPage } from "pages/no-topic-page.slint";
 import { LineInputDialog } from "dialogs/line-input-dialog.slint";
 import { IconButton } from "components/icon-button.slint";
+import "../assets/fonts/Inter-Medium.ttf";
 
 export component AppWindow inherits Window {
     title: "Spaced Repitition Organizer";
@@ -13,6 +14,9 @@ export component AppWindow inherits Window {
 
     height: 570px;
     width: 1024px;
+
+    default-font-family: "Inter 24pt Medium";
+    default-font-weight: 500;
 
     // Properties
     property <string> topic_name: "";
