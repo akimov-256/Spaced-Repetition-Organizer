@@ -8,12 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Added due and lesson labeling to topic cards.
 
 ### Changed
 
 ### Fixed
-- Fixed broken due calculation logic, made review button work even when due is past today.
 
 ### Known Issues
 
