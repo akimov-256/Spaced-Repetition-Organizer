@@ -16,6 +16,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     database_manager::initialize_database()?;
 
     let ui_clone = ui.clone_strong();
+    load_topics(&ui_clone)?;
+
+    let ui_clone = ui.clone_strong();
     let ui_clone_2 = ui.clone_strong();
     ui_clone.on_create_topic_requested(move |name| {
         match database_manager::create_topic(&name) {
@@ -132,9 +135,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     });
 
     let ui_clone = ui.clone_strong();
-    load_topics(&ui_clone)?;
-
-    let ui_clone = ui.clone_strong();
     let ui_clone_2 = ui.clone_strong();
     ui_clone.on_load_lessons_requested(move |topic| {
         match load_lessons(&ui_clone_2, topic.to_string()) {
@@ -163,7 +163,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                     Ok(_) => {
                         match load_lessons(&ui_clone_2, topic.to_string()) {
                             Ok(_) => {
-
+                                
                             }
                             Err(error) => {
                                 MessageDialog::new()
@@ -280,6 +280,8 @@ fn load_lessons(app: &AppWindow, topic: String) -> Result<(), Box<dyn Error>> {
     .collect();
 
     let model = ModelRc::new(VecModel::from(lesson_data));
+
+    load_topics(app)?;
 
     app.set_lessons(model);
 

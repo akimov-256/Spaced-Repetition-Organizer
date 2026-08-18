@@ -8,9 +8,7 @@ pub fn initialize_database() -> Result<()> {
     conn.execute(
         "CREATE TABLE IF NOT EXISTS topics (
                 id INTEGER PRIMARY KEY,
-                name TEXT NOT NULL,
-                lessons INTEGER NOT NULL,
-                due INTEGER NOT NULL
+                name TEXT NOT NULL
             ) STRICT", {})?;
 
     conn.execute(
@@ -41,7 +39,16 @@ pub fn create_topic(name: &str) -> Result<()> {
 pub fn load_topics() -> Result<Vec<Topic>> {
     let conn = Connection::open("database.db")?;
 
-    let mut statement = conn.prepare("SELECT name, lessons, due FROM topics")?;
+    let mut statement = conn.prepare(
+        "SELECT
+            topics.name,
+            COUNT(lessons.id),
+            0
+        FROM topics
+         LEFT JOIN lessons
+          ON lessons.topic = topics.name
+        GROUP BY topics.id, topics.name"
+    )?;
 
     let rows = statement.query_map([], |row| {
         Ok(Topic {
