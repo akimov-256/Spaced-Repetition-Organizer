@@ -7,7 +7,7 @@ export component LessonCard inherits Rectangle {
     in-out property <string> last_reviewed;
     in-out property <string> next_review;
     in-out property <string> stage;
-    in-out property <string> due;
+    in-out property <int> due;
 
     // Callbacks
     callback review_button_pressed();
@@ -45,7 +45,7 @@ export component LessonCard inherits Rectangle {
                 font-size: 14px;
             }
             Text {
-                text: root.stage + " · " + ((root.due == "0 days.") ? "today" : root.due);
+                text: root.stage + " · " + ((root.due <= 0) ? "today" : @tr("{} days.", root.due));
                 color: ThemeState.isLight ? LightColorPalette.SelectedText : DarkColorPalette.SelectedText;
                 font-size: 12px;
             }
@@ -61,7 +61,7 @@ export component LessonCard inherits Rectangle {
                 icon: @image-url("../../assets/icons/done.svg");
                 colorize-icon: true;
 
-                enabled: due == "0 days.";
+                enabled: due <= 0;
 
                 clicked => {
                     root.review_button_pressed()

@@ -112,7 +112,7 @@ pub fn load_lessons(topic: String) -> Result<Vec<Lesson>> {
         let next_formatted = next_review.unwrap()
             .format("%d-%m-%Y").to_string();
 
-        let due = next_review.unwrap().signed_duration_since(Utc::now()).num_days() + 1;
+        let due  = next_review.unwrap().signed_duration_since(Utc::now()).num_days() + 1;
 
         Ok(
             Lesson {
@@ -121,7 +121,7 @@ pub fn load_lessons(topic: String) -> Result<Vec<Lesson>> {
                 stage: row.get(1)?,
                 previous_review: previous_formatted,
                 next_review: next_formatted,
-                due: due.to_string() + " days."
+                due: due
             }
         )
     })?;

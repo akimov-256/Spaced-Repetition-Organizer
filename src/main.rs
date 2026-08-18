@@ -275,7 +275,7 @@ fn load_lessons(app: &AppWindow, topic: String) -> Result<(), Box<dyn Error>> {
         stage: row.stage,
         previous_review: row.previous_review.to_shared_string(),
         next_review: row.next_review.to_shared_string(),
-        due: row.due.to_shared_string()
+        due: row.due as i32
     })
     .collect();
 
