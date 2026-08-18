@@ -43,7 +43,10 @@ pub fn load_topics() -> Result<Vec<Topic>> {
         "SELECT
             topics.name,
             COUNT(lessons.id),
-            0
+            COUNT(CASE
+                WHEN lessons.next_review <= CAST(strftime('%s', 'now') AS INTEGER)
+                THEN 1
+                END)
         FROM topics
          LEFT JOIN lessons
           ON lessons.topic = topics.name
