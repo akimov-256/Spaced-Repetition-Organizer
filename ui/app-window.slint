@@ -1,4 +1,4 @@
-import { LineEdit, ListView } from "std-widgets.slint";
+import { LineEdit, ListView, Button } from "std-widgets.slint";
 import { TopicCard } from "components/topic-card.slint";
 import { DarkColorPalette, LightColorPalette, ThemeState } from "theme/color-palette.slint";
 import { TopicData, LessonData } from "models.slint";
@@ -125,6 +125,16 @@ export component AppWindow inherits Window {
                             }
                         }
                     }
+                }
+
+                Button {
+                    text: "Settings";
+                    
+                    icon: @image-url("../assets/icons/setting.svg");
+                    colorize-icon: true;
+
+                    height: 30px;
+                    width: 230px;
                 }
             }   
         }   
