@@ -146,7 +146,7 @@ export component AppWindow inherits Window {
         }   
 
         // Content space
-        if (root.current_page == "" || root.topics.length == 0) : EmptyState {
+        if (root.current_page == "" || root.topics.length == 0) : NoTopicPage {
 
         }
 
@@ -154,7 +154,7 @@ export component AppWindow inherits Window {
 
         }
 
-        if (root.current_page != "" && root.topics.length > 0) : LessonsPage {
+        if (root.current_page != "" && root.current_page != "settings" && root.topics.length > 0) : LessonsPage {
             topic: root.current_page;
             lessons: root.lessons;
 

@@ -1,4 +1,6 @@
-import { SettingsSection } from "../components/settings-section.slint";
+import { SettingsSection, Setting } from "../components/settings-section.slint";
+import { ComboBox } from "std-widgets.slint";
+import { ThemeState } from "../theme/color-palette.slint";
 export component SettingsPage inherits Rectangle {
     background: transparent;
 
@@ -6,9 +8,31 @@ export component SettingsPage inherits Rectangle {
         padding: 10px;
 
         SettingsSection {
-            height: 200px;
 
-            
+            // Theme setting
+            Setting {
+                HorizontalLayout {
+                    padding: 10px;
+
+                    Text {
+                        text: "Theme mode";
+
+                        font-size: 16px;
+                    }
+
+                    ComboBox {
+                        width: 150px;
+                        height: 20px;
+
+                        model: ["Light", "Dark"];
+                        current-index: 0;
+
+                        selected(value) => {
+                            ThemeState.isLight = value == "Light" ? true : false;
+                        }
+                    }
+                }
+            }
         }
     }
 }
