@@ -1,0 +1,8 @@
+import { ThemeState, LightColorPalette, DarkColorPalette } from "../theme/color-palette.slint";
+export component SettingsSection inherits Rectangle {
+    background: ThemeState.isLight ? LightColorPalette.SideBar : DarkColorPalette.SideBar;
+
+    border-radius: 10px;
+    border-color: ThemeState.isLight ? LightColorPalette.Border : DarkColorPalette.Border;
+    border-width: 1px;
+}
