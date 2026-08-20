@@ -99,9 +99,11 @@ SRO/
 │   ├── pages/
 │   └── theme/
 ├── assets/
+│   ├── fonts/
 │   ├── icons/
 │   └── app-icon.png
 ├── Cargo.toml
+├── CHANGELOG.md
 └── README.md
 ```
 
