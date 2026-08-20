@@ -1,0 +1,79 @@
+import { ThemeState, LightColorPalette, DarkColorPalette } from "../theme/color-palette.slint";
+
+export component Button {
+    in property <string> text;
+    in property <image> icon;
+    in property <length> icon-size: 20px;
+    in property <bool> enabled: true;
+    in property <bool> colorize-icon;
+    callback clicked;
+
+    private property <color> text-color: ThemeState.isLight ?
+        LightColorPalette.Text : DarkColorPalette.Text;
+
+    min-width: max(32px, i-layout.min-width);
+    min-height: max(32px, i-layout.min-height);
+    horizontal-stretch: 0;
+    vertical-stretch: 0;
+
+    accessible-role: button;
+    accessible-enabled: root.enabled;
+    accessible-label: root.text;
+    accessible-action-default => { i-touch-area.clicked(); }
+
+    states [
+        disabled when !root.enabled : {
+            i-background.background: ThemeState.isLight ?
+                LightColorPalette.Background : DarkColorPalette.Background;
+            root.text-color: ThemeState.isLight ?
+                LightColorPalette.TextLight :
+                DarkColorPalette.TextLight;
+        }
+        pressed when i-touch-area.pressed : {
+            i-background.background: ThemeState.isLight ?
+                LightColorPalette.Hover.darker(0.1) :
+                DarkColorPalette.Hover.darker(0.1);
+        }
+        hover when i-touch-area.has-hover : {
+            i-background.background: ThemeState.isLight ?
+                LightColorPalette.Hover : DarkColorPalette.Hover;
+        }
+    ]
+
+    i-background := Rectangle {
+        border-radius: 4px;
+        background: ThemeState.isLight ?
+            LightColorPalette.Background : DarkColorPalette.Background;
+        animate background { duration: 150ms; }
+
+        i-layout := HorizontalLayout {
+            padding-left: 12px;
+            padding-right: 12px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            spacing: 4px;
+            alignment: center;
+
+            if (root.icon.width > 0 && root.icon.height > 0) : Image {
+                y: (parent.height - self.height) / 2;
+                source <=> root.icon;
+                width: root.icon-size;
+                min-height: root.icon-size;
+                colorize: root.colorize-icon ? root.text-color : transparent;
+            }
+
+            if (root.text != ""): Text {
+                horizontal-alignment: center;
+                vertical-alignment: center;
+                text: root.text;
+                color: root.text-color;
+                animate color { duration: 150ms; }
+            }
+        }
+    }
+
+    i-touch-area := TouchArea {
+        enabled: root.enabled;
+        clicked => { root.clicked(); }
+    }
+}

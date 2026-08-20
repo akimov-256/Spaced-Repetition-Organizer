@@ -1,4 +1,4 @@
-import { LineEdit, ListView, Button } from "std-widgets.slint";
+import { LineEdit, ListView } from "std-widgets.slint";
 import { TopicCard } from "components/topic-card.slint";
 import { DarkColorPalette, LightColorPalette, ThemeState } from "theme/color-palette.slint";
 import { TopicData, LessonData } from "models.slint";
@@ -9,6 +9,7 @@ import { IconButton } from "components/icon-button.slint";
 import "../assets/fonts/Inter-Medium.ttf";
 import { SettingsPage } from "pages/settings-page.slint";
 import { EmptyState } from "pages/empty-state.slint";
+import { Button } from "components/button.slint";
 
 export component AppWindow inherits Window {
     title: "Spaced Repitition Organizer";

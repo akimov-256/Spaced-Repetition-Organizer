@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added theme setting.
 
 ### Changed
+- Used custom Button element to better control and customize the app.
 
 ### Fixed
 
