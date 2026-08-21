@@ -1,5 +1,6 @@
 use chrono::{DateTime, Duration, Utc};
 use rusqlite::{Connection, Result};
+use slint::ToSharedString;
 use crate::models::{Lesson, Topic};
 
 pub fn initialize_database() -> Result<()> {
@@ -31,7 +32,7 @@ pub fn create_topic(name: &str) -> Result<()> {
 
     let conn = Connection::open("database.db")?;
 
-    conn.execute("INSERT INTO topics (name, lessons, due) VALUES (:name, :lessons, :due)", (name, 0, 0))?;
+    conn.execute("INSERT INTO topics (name) VALUES (:name)", [&name])?;
 
     Ok(())
 }
