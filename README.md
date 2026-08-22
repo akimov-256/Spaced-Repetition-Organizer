@@ -8,9 +8,10 @@
 **A fast, native spaced repetition study companion built with Rust and Slint.**
 
 <img src="https://github.com/akimov-256/Spaced-Repetition-Organizer/actions/workflows/ci.yml/badge.svg" alt="Build Status">
-<img src="https://img.shields.io/badge/Rust-003CDD?style=flat&logo=rust&logoColor=white">
+<img src="https://img.shields.io/github/v/release/akimov-256/Spaced-Repetition-Organizer?label=Version&color=F39C12" alt="Version">
+<img src="https://img.shields.io/badge/Rust-D34516?style=flat&logo=rust&logoColor=white">
 <img src="https://img.shields.io/badge/UI-Slint-003CDD?style=flat">
-<img src="https://img.shields.io/badge/Platform-Windows-003CDD?style=flat">
+<img src="https://img.shields.io/badge/Platform-Windows-00AA00?style=flat">
 <img src="https://img.shields.io/badge/License-MIT-003CDD?style=flat">
 
 </div>
